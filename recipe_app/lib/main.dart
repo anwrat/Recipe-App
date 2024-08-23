@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/utils/colors.dart';
+import 'package:recipe_app/search.dart';
+import 'package:recipe_app/widgets/buttons.dart';
+import 'package:recipe_app/widgets/textfields.dart';
 
 void main() {
   runApp(const MyApp());
@@ -78,6 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      appBar: AppBar(
+        
+      ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -108,14 +114,55 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const Textfields(),
+            //Home Button
+            ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+              ),
+              //To use a hex color use color class and add 0xff as prefix
+              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
+              onPressed: _incrementCounter,
+            ),
+            //Search Button
+            ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+              ),
+              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),),
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:(context) =>
+                      const SearchPage(),
+                    )
+                );
+              },
+            ),
+            Buttons(
+              title: "Hello",
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:(context) =>
+                      const SearchPage(),
+                    )
+                );
+            },
+            buttonColor: Colors.blue,
+            textColor:Colors.red,
+            icons:const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),)
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(IconData(0xe318, fontFamily: 'MaterialIcons')),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        backgroundColor: MyColors.primarycolor,
+        onPressed:_incrementCounter,
+        child: const Icon(color: Color(0xffFFFFFF),Icons.add,),
+      ),
     );
   }
 }
