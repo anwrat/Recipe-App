@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/textfields.dart';
+import 'package:recipe_app/widgets/logo.dart';
 
 class SearchPage extends StatefulWidget{
   const SearchPage();
@@ -12,6 +13,15 @@ class _SearchPageState extends State<SearchPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 200,//height of appbar
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogoSection(image: 'assets/images/mainlogo.png'),
+          ],
+        ), 
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

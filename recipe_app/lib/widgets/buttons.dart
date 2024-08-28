@@ -38,7 +38,7 @@ class _ButtonsState extends State<Buttons> {
           minimumSize: const Size(120, 50),
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 25.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(100.0),
           ),
         ),
       );
@@ -49,7 +49,7 @@ class _ButtonsState extends State<Buttons> {
           minimumSize: const Size(120, 50),
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 25.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(100.0),
           ),
         ),
         onPressed: widget.onPressed,
@@ -63,3 +63,20 @@ class _ButtonsState extends State<Buttons> {
     }
   }
 }
+//EXAMPLE OF AN ELEVATED BUTTON
+            // ElevatedButton(
+            //   style: ButtonStyle(
+            //       backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+            //   ),
+            //   //To use a hex color use color class and add 0xff as prefix
+            //   child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
+            //   onPressed:(){
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder:(context) =>
+            //           const SearchPage(),
+            //         )
+            //     );
+            //   },
+            // ),

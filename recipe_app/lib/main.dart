@@ -5,7 +5,6 @@ import 'package:recipe_app/search.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/textfields.dart';
-import 'package:recipe_app/widgets/navbar.dart';
 
 
 void main() {
@@ -63,13 +62,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,58 +100,22 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _getSelectedScreen(_selectedIndex),
-            // //Home Button
-            // ElevatedButton(
-            //   style: ButtonStyle(
-            //       backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
-            //   ),
-            //   //To use a hex color use color class and add 0xff as prefix
-            //   child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
-            //   onPressed:(){
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder:(context) =>
-            //           const SearchPage(),
-            //         )
-            //     );
-            //   },
-            // ),
-            // Buttons(
-            //   title: "Hello",
-            //   onPressed:(){
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder:(context) =>
-            //           const SearchPage(),
-            //         )
-            //     );
-            // },
-            // buttonColor: Colors.blue,
-            // textColor:Colors.red,
-            // icons:const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),)
-            // ),
+            //Login Button
+            Buttons(
+              title: "Login",
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:(context) =>
+                      const SearchPage(),
+                    )
+                );
+            },
+            ),
           ],
         ),
       ),
-      //To place the navbar at bottom of screen
-      bottomNavigationBar: NavBar(currentIndex: _selectedIndex, onTap: _onItemTapped),
     );
-  }
-   Widget _getSelectedScreen(int index) {
-    switch (index) {
-      case 0:
-        return const HomePage();
-      case 1:
-        return const Text('Search Screen');
-      case 2:
-        return const Text('Account Screen');
-      case 3:
-        return const Text('Settings');
-      default:
-        return const Text('Home Screen');
-    }
   }
 }
