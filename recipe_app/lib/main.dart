@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/home.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/search.dart';
 import 'package:recipe_app/widgets/buttons.dart';
+import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/textfields.dart';
+import 'package:recipe_app/widgets/navbar.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -59,16 +63,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
@@ -82,7 +81,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        
+        toolbarHeight: 200,//height of appbar
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogoSection(image: 'assets/images/mainlogo.png'),
+          ],
+        ), 
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -103,79 +108,58 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const LogoSection(image: 'assets/images/mainlogo.png'),
-            const Text(
-              'You have pushed the button this many times:',
-              style: TextStyle(
-                color:MyColors.primarycolor
-              ),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const Textfields(),
-            //Home Button
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
-              ),
-              //To use a hex color use color class and add 0xff as prefix
-              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
-              onPressed: _incrementCounter,
-            ),
-            //Search Button
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
-              ),
-              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),),
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const SearchPage(),
-                    )
-                );
-              },
-            ),
-            Buttons(
-              title: "Hello",
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const SearchPage(),
-                    )
-                );
-            },
-            buttonColor: Colors.blue,
-            textColor:Colors.red,
-            icons:const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),)
-            ),
+            _getSelectedScreen(_selectedIndex),
+            // //Home Button
+            // ElevatedButton(
+            //   style: ButtonStyle(
+            //       backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+            //   ),
+            //   //To use a hex color use color class and add 0xff as prefix
+            //   child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
+            //   onPressed:(){
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder:(context) =>
+            //           const SearchPage(),
+            //         )
+            //     );
+            //   },
+            // ),
+            // Buttons(
+            //   title: "Hello",
+            //   onPressed:(){
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder:(context) =>
+            //           const SearchPage(),
+            //         )
+            //     );
+            // },
+            // buttonColor: Colors.blue,
+            // textColor:Colors.red,
+            // icons:const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),)
+            // ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.primarycolor,
-        onPressed:_incrementCounter,
-        child: const Icon(color: Color(0xffFFFFFF),Icons.add,),
-      ),
+      //To place the navbar at bottom of screen
+      bottomNavigationBar: NavBar(currentIndex: _selectedIndex, onTap: _onItemTapped),
     );
   }
-}
-class LogoSection extends StatelessWidget{
-  const LogoSection({super.key,required this.image});
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset(
-      image,
-      width:200,
-      height:100,
-      fit: BoxFit.contain,);
+   Widget _getSelectedScreen(int index) {
+    switch (index) {
+      case 0:
+        return const HomePage();
+      case 1:
+        return const Text('Search Screen');
+      case 2:
+        return const Text('Account Screen');
+      case 3:
+        return const Text('Settings');
+      default:
+        return const Text('Home Screen');
+    }
   }
 }

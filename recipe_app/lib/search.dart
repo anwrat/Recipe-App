@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/utils/colors.dart';
+import 'package:recipe_app/widgets/textfields.dart';
 
 class SearchPage extends StatefulWidget{
   const SearchPage();
@@ -16,6 +17,7 @@ class _SearchPageState extends State<SearchPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Search Page"),
+            const Textfields(),
             //Home Button
             ElevatedButton(
               style: ButtonStyle(
