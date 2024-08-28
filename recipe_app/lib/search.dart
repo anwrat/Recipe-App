@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Search Page"),
-            const Textfields(),
+            const Textfields(displaytext: "Enter your term to search"),
             //Home Button
             ElevatedButton(
               style: ButtonStyle(

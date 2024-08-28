@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/utils/colors.dart';
 
 class Textfields extends StatefulWidget{
-  const Textfields();
+  final String displaytext;
+  const Textfields(
+    {super.key,
+    required this.displaytext,
+  });
   @override
   State<Textfields> createState() => _TextfieldsState();
 }
@@ -13,12 +17,12 @@ class _TextfieldsState extends State<Textfields> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Enter a search term',
+              hintText: widget.displaytext,
             ),
           ),
         ),
