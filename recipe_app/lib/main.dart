@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/home.dart';
+import 'package:recipe_app/login.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/search.dart';
+import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/textfields.dart';
@@ -100,7 +102,20 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const Text("Everyone can cook, You too!!"),
             //Login Button
+            Buttons(
+              title: "Register",
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:(context) =>
+                      const HTTPExample(),
+                    )
+                );
+            },
+            ),
             Buttons(
               title: "Login",
               onPressed:(){
@@ -108,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder:(context) =>
-                      const SearchPage(),
+                      const Login(),
                     )
                 );
             },
