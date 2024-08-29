@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/home.dart';
 import 'package:recipe_app/login.dart';
 import 'package:recipe_app/utils/colors.dart';
-import 'package:recipe_app/search.dart';
 import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
-import 'package:recipe_app/widgets/textfields.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -102,7 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text("Everyone can cook, You too!!"),
+            Text(
+              "Everyone can cook, You too!!",
+              style: GoogleFonts.leagueSpartan(
+                fontSize: 30,
+              ),),
             //Login Button
             Buttons(
               title: "Register",
