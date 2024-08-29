@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
 
 class Buttons extends StatefulWidget {
@@ -29,8 +30,9 @@ class _ButtonsState extends State<Buttons> {
         icon: widget.icons!,
         label: Text(
           widget.title,
-          style: TextStyle(
+          style: GoogleFonts.leagueSpartan(
             color: widget.textColor,
+            fontSize: 32,
           ),
         ), // Text on the right
         style: ElevatedButton.styleFrom(
@@ -55,8 +57,9 @@ class _ButtonsState extends State<Buttons> {
         onPressed: widget.onPressed,
         child: Text(
           widget.title,
-          style: TextStyle(
+          style: GoogleFonts.leagueSpartan(
             color: widget.textColor,
+            fontSize: 32,
           ),
         ),
       );

@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ), 
       ),
-      body: Center(
+      body: Align(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -97,37 +97,61 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center, Use this when center needed
           children: <Widget>[
-            Text(
-              "Everyone can cook, You too!!",
-              style: GoogleFonts.leagueSpartan(
-                fontSize: 30,
-              ),),
+            Padding(
+              child:Text(
+                "Everyone can cook, You too!!",
+                style: GoogleFonts.indieFlower(
+                  fontSize: 30,
+                ),),
+              padding: const EdgeInsets.all(50),
+              ),
             //Login Button
-            Buttons(
-              title: "Register",
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const HTTPExample(),
-                    )
-                );
-            },
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:Buttons(
+                title: "Register",
+                onPressed:(){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:(context) =>
+                        const HTTPExample(),
+                      )
+                  );
+              },
+              ),
             ),
-            Buttons(
-              title: "Login",
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const Login(),
-                    )
-                );
-            },
+            Padding(
+              child:Text(
+                "Already have an account?",
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 20,
+                ),),
+              padding: const EdgeInsets.only(top: 30),
+            ),
+            InkWell(
+              onTap:(){
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>Login()));
+              },
+              child: Text(
+                'Log-In',
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 20,
+                  color: MyColors.primarycolor,
+                ),), 
+            ),
+            //To align the image at bottom of page
+            Spacer(),
+            Column(
+              children:[
+                Image.asset(
+                  'assets/images/clouds.png',
+                  width: MediaQuery.of(context).size.width, // Makes the image cover the entire width
+                  fit: BoxFit.cover, // Ensures the image scales correctly
+                ),
+              ], 
             ),
           ],
         ),
@@ -135,3 +159,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+

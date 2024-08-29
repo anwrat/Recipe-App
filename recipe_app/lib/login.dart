@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/search.dart';
+import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/logo.dart';
+import 'package:recipe_app/widgets/buttons.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -31,24 +34,29 @@ class _LoginState extends State<Login> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Text('Log-In',style: GoogleFonts.leagueSpartan(fontSize:30 ),),
                 const SizedBox(
                   height: 30.0,
-                ),
-                const Text(
-                  'LOGIN',
-                  style: TextStyle(
-                    fontFamily: 'FiraSans',
-                    fontWeight: FontWeight.w300,
-                    fontSize: 30.0,
-                    // color: Color(0xFF035388),
-                    color: Colors.amber,
-                    letterSpacing: 0.5,
-                  ),
                 ),
                 const SizedBox(
                   height: 40.0,
                 ),
                 _buildTextFields(),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:Buttons(
+                title: "Login",
+                onPressed:(){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:(context) =>
+                        const HTTPExample(),
+                      )
+                  );
+              },
+              ),
+            ),
                 const SizedBox(
                   height: 60.0,
                 ),
@@ -127,22 +135,6 @@ class _LoginState extends State<Login> {
     return Container(
       child: Column(
         children: <Widget>[
-          ElevatedButton(
-            child: const Text(
-              'LOGIN',
-              style: TextStyle(
-                fontFamily: 'FiraSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
-                color: Color(0xFF0B69A3),
-                letterSpacing: 2.0,
-              ),
-            ),
-            onPressed: () {
-              Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => 
-              const SearchPage(),));            },
-          ),
          const SizedBox(
             height: 80.0,
           ),
