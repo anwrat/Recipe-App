@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
                     context,
                     MaterialPageRoute(
                       builder:(context) =>
-                        const HTTPExample(),
+                        const Register2nd(),
                       )
                   );
               },
@@ -57,6 +57,105 @@ class _RegisterState extends State<Register> {
                   ),
                 ], 
               ),              
+            ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Register2nd extends StatelessWidget{
+  const Register2nd({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 200,//height of appbar
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogoSection(image: 'assets/images/mainlogo.png'),
+          ],
+        ), 
+      ),
+      body: Align(
+        child: SafeArea(
+          child: Column(
+              children: <Widget>[
+                Text('Enter your email address',style: GoogleFonts.leagueSpartan(fontSize:30 ),),
+            Textfields(displaytext: 'example@email.com',),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:Buttons(
+                title: "Continue",
+                onPressed:(){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:(context) =>
+                        const PasswordCreation(),
+                      )
+                  );
+              },
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              child: Column(
+                children:[
+                  Image.asset(
+                    'assets/images/emailman.png',
+                    width: MediaQuery.of(context).size.width, // Makes the image cover the entire width
+                    fit: BoxFit.contain, // Ensures the image scales correctly
+                  ),
+                ], 
+              ),              
+            ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PasswordCreation extends StatelessWidget{
+  const PasswordCreation({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 200,//height of appbar
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogoSection(image: 'assets/images/mainlogo.png'),
+          ],
+        ), 
+      ),
+      body: Align(
+        child: SafeArea(
+          child: Column(
+              children: <Widget>[
+                Text('Enter a password for your account',style: GoogleFonts.leagueSpartan(fontSize:30 ),),
+            Textfields(displaytext: 'Enter password...',),
+            Textfields(displaytext: 'Repeat password...',),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:Buttons(
+                title: "Complete",
+                onPressed:(){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:(context) =>
+                        const HTTPExample(),
+                      )
+                  );
+              },
+              ),
             ),
             ],
           ),
