@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_app/main.dart';
+import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/search.dart';
 import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/logo.dart';
@@ -57,11 +57,26 @@ class _LoginState extends State<Login> {
               },
               ),
             ),
-                const SizedBox(
-                  height: 60.0,
-                ),
-                _buildButtons(),
-              ],
+            Padding(
+              child:Text(
+                "Don't have an account?",
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 20,
+                ),),
+              padding: const EdgeInsets.only(top: 30),
+            ),
+            InkWell(
+              onTap:(){
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchPage()));
+              },
+              child: Text(
+                'Sign-Up',
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 20,
+                  color: MyColors.primarycolor,
+                ),), 
+            ),
+            ],
             ),
           ),
         ),
@@ -126,28 +141,6 @@ class _LoginState extends State<Login> {
               obscureText: true,
             ),
           )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildButtons() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-         const SizedBox(
-            height: 80.0,
-          ),
-          ElevatedButton (
-            child: Icon(
-              Icons.close,
-              color: Colors.grey[400],
-              size: 40.0,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
         ],
       ),
     );

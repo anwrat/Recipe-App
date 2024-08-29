@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/login.dart';
+import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
-import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(
                       builder:(context) =>
-                        const HTTPExample(),
+                        const Register(),
                       )
                   );
               },
