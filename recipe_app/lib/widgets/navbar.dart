@@ -39,30 +39,30 @@ class _NavigationExampleState extends State<NavigationExample> {
             currentPageIndex = index;
           });
         },
-        indicatorShape: RoundedRectangleBorder(),
+        indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         indicatorColor: MyColors.navactiveicon,
         selectedIndex: currentPageIndex,
         height: 70,
         destinations: 
         const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
-            icon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            selectedIcon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 40,),
+            icon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 40,),
             label: '',
           ),
           NavigationDestination(
-            selectedIcon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
-            icon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            selectedIcon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 40,),
+            icon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 40,),
             label: '',
           ),
           NavigationDestination(
-            selectedIcon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
-            icon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            selectedIcon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 40,),
+            icon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 40,),
             label: '',
           ),
           NavigationDestination(
-            selectedIcon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
-            icon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            selectedIcon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 40,),
+            icon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 40,),
             label: '',
           ),
         ],

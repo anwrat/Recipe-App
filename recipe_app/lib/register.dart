@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
+import 'package:recipe_app/widgets/navbar.dart';
 import 'package:recipe_app/widgets/textfields.dart';
 
 class Register extends StatefulWidget {
@@ -148,7 +148,7 @@ class PasswordCreation extends StatelessWidget{
                     context,
                     MaterialPageRoute(
                       builder:(context) =>
-                        const HTTPExample(),
+                        const NavigationBarApp(),
                       )
                   );
               },

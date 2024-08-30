@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/main.dart';
-import 'package:recipe_app/utils/colors.dart';
 
 class LogoSection extends StatelessWidget{
   const LogoSection({super.key,required this.image});

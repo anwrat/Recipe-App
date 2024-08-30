@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
-import 'package:recipe_app/widgets/navbar.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage();
