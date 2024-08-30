@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
-import 'package:recipe_app/search.dart';
 import 'package:recipe_app/APItest.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
+import 'package:recipe_app/widgets/navbar.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -51,7 +52,7 @@ class _LoginState extends State<Login> {
                     context,
                     MaterialPageRoute(
                       builder:(context) =>
-                        const HTTPExample(),
+                        const NavigationBarApp(),
                       )
                   );
               },
@@ -67,7 +68,7 @@ class _LoginState extends State<Login> {
             ),
             InkWell(
               onTap:(){
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchPage()));
+                Navigator.push(context,MaterialPageRoute(builder: (context)=>Register()));
               },
               child: Text(
                 'Sign-Up',

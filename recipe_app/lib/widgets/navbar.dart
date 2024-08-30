@@ -1,100 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/home.dart';
+import 'package:recipe_app/search.dart';
 import 'package:recipe_app/utils/colors.dart';
 
-class NavBar extends StatelessWidget {
-  final int currentIndex;
-  final Function(int) onTap;
+/// Flutter code sample for [NavigationBar].
 
-  const NavBar({
-    Key? key,
-    required this.currentIndex,
-    required this.onTap,
-  }) : super(key: key);
+void main() => runApp(const NavigationBarApp());
+
+class NavigationBarApp extends StatelessWidget {
+  const NavigationBarApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon:_buildiconwithbg(
-            icon: IconData(0xe318, fontFamily: 'MaterialIcons'),
-            backgroundColor: MyColors.primarycolor,
-            iconcolor: MyColors.mainwhite,
-          ),
-          activeIcon:_buildiconwithbg(
-            icon: IconData(0xe318, fontFamily: 'MaterialIcons'),
-            backgroundColor:MyColors.navactiveicon,
-            iconcolor: MyColors.mainblack
-            ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon:_buildiconwithbg(
-            icon: IconData(0xe567, fontFamily: 'MaterialIcons'),
-            backgroundColor: MyColors.primarycolor,
-            iconcolor: MyColors.mainwhite,
-          ),
-          activeIcon:_buildiconwithbg(
-            icon: IconData(0xe567, fontFamily: 'MaterialIcons'),
-            backgroundColor:MyColors.navactiveicon,
-            iconcolor: MyColors.mainblack,
-            ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon:_buildiconwithbg(
-            icon: IconData(0xe491, fontFamily: 'MaterialIcons'),
-            backgroundColor: MyColors.primarycolor,
-            iconcolor: MyColors.mainwhite,
-          ),
-          activeIcon:_buildiconwithbg(
-            icon: IconData(0xe491, fontFamily: 'MaterialIcons'),
-            backgroundColor:MyColors.navactiveicon,
-            iconcolor: MyColors.mainblack,
-            ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon:_buildiconwithbg(
-            icon: IconData(0xe57f, fontFamily: 'MaterialIcons'),
-            backgroundColor: MyColors.primarycolor,
-            iconcolor: MyColors.mainwhite,
-          ),
-          activeIcon:_buildiconwithbg(
-            icon: IconData(0xe57f, fontFamily: 'MaterialIcons'),
-            backgroundColor:MyColors.navactiveicon,
-            iconcolor: MyColors.mainblack,
-            ),
-          label: '',
-        ),
-      ],
-      // selectedItemColor: MyColors.mainblack, // Active icon color
-      // unselectedItemColor: MyColors.mainwhite, // Inactive icon color
-      // Hide labels for inactive and active items
-      showSelectedLabels: false,
-      showUnselectedLabels: false, 
-      backgroundColor: MyColors.primarycolor,
-      type:BottomNavigationBarType.fixed,
-      elevation: 8.0,
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: true),
+      home: const NavigationExample(),
     );
   }
-   Widget _buildiconwithbg({required IconData icon, required Color backgroundColor,required Color iconcolor}) {
-    return Container(
-      width: 40, // Width of the square
-      height: 40, // Height of the square
-      decoration: BoxDecoration(
-        color: backgroundColor, // Background color
-        shape: BoxShape.rectangle, // Square shape
-        borderRadius: BorderRadius.circular(4), // Optional: slightly rounded corners
+}
+
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
+
+  @override
+  State<NavigationExample> createState() => _NavigationExampleState();
+}
+
+class _NavigationExampleState extends State<NavigationExample> {
+  int currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: MyColors.primarycolor,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorShape: RoundedRectangleBorder(),
+        indicatorColor: MyColors.navactiveicon,
+        selectedIndex: currentPageIndex,
+        height: 70,
+        destinations: 
+        const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
+            icon: Icon(IconData(0xe318, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            label: '',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
+            icon: Icon(IconData(0xe567, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            label: '',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
+            icon: Icon(IconData(0xe491, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            label: '',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainblack,size: 50,),
+            icon: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color: MyColors.mainwhite,size: 50,),
+            label: '',
+          ),
+        ],
       ),
-      alignment: Alignment.center,
-      child: Icon(
-        icon,
-        color: iconcolor,
-        size: 20,
-      ),
+      body: <Widget>[
+        //Home Page
+        const HomePage(),
+
+        /// Search page
+        const SearchPage(),
+
+        /// Account page
+        const SearchPage(),
+
+        /// Settings Page
+        const SearchPage(),
+      ][currentPageIndex],
     );
   }
 }

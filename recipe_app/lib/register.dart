@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/APItest.dart';
+import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/textfields.dart';
@@ -47,17 +48,15 @@ class _RegisterState extends State<Register> {
               ),
             ),
             Spacer(),
-            Expanded(
-              child: Column(
-                children:[
-                  Image.asset(
-                    'assets/images/thinkingman.png',
-                    width: MediaQuery.of(context).size.width, // Makes the image cover the entire width
-                    fit: BoxFit.contain, // Ensures the image scales correctly
-                  ),
-                ], 
-              ),              
-            ),
+            Column(
+              children:[
+                Image.asset(
+                  'assets/images/thinkingman.png',
+                  width: MediaQuery.of(context).size.width*0.8, // Makes the image cover the entire width
+                  fit: BoxFit.contain, // Ensures the image scales correctly
+                ),
+              ], 
+            ),              
             ],
           ),
         ),
@@ -102,17 +101,15 @@ class Register2nd extends StatelessWidget{
               ),
             ),
             Spacer(),
-            Expanded(
-              child: Column(
-                children:[
-                  Image.asset(
-                    'assets/images/emailman.png',
-                    width: MediaQuery.of(context).size.width, // Makes the image cover the entire width
-                    fit: BoxFit.contain, // Ensures the image scales correctly
-                  ),
-                ], 
-              ),              
-            ),
+            Column(
+              children:[
+                Image.asset(
+                  'assets/images/emailman.png',
+                  width: MediaQuery.of(context).size.width*0.8, // Makes the image cover the entire width
+                  fit: BoxFit.contain, // Ensures the image scales correctly
+                ),
+              ], 
+            ),              
             ],
           ),
         ),
@@ -156,6 +153,37 @@ class PasswordCreation extends StatelessWidget{
                   );
               },
               ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+            child:Container(
+              color:MyColors.minorcolor,
+              child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Password Requirements',style: GoogleFonts.leagueSpartan(fontSize:20,color: MyColors.primarycolor ),),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('• Minimum of 7 length',style: GoogleFonts.leagueSpartan(fontSize:20,),),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('• Must include at least a number',style: GoogleFonts.leagueSpartan(fontSize:20,),),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('• Must include a special character',style: GoogleFonts.leagueSpartan(fontSize:20,),),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('• Must include both uppercase and lowercase characters',style: GoogleFonts.leagueSpartan(fontSize:20,),),
+                ),
+              ],
+              ),
+            ),
+
             ),
             ],
           ),
