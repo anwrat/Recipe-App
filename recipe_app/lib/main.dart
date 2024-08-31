@@ -49,13 +49,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Stack(
         children: [
-          // Background Image
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.2, // Adjust the opacity to make the image less intrusive
-              child: Image.asset(
-                'assets/images/clouds.png',
-                fit: BoxFit.cover,
+          // Background Image on bottom of page
+          Align(
+          alignment: Alignment.bottomLeft,
+          child: Opacity(
+            opacity: 0.2, // Adjust the opacity as needed
+            child: Image.asset(
+              'assets/images/clouds.png',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover, // Ensures the image covers the width properly
               ),
             ),
           ),

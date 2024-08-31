@@ -28,15 +28,17 @@ class _RegisterState extends State<Register> {
       body: Stack(
         children: [
           // Background Image
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.2, // Adjust the opacity to make the image less intrusive
-              child: Image.asset(
-                'assets/images/thinkingman.png',
-                fit: BoxFit.cover,
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Opacity(
+                  opacity: 0.2, // Adjust the opacity as needed
+                  child: Image.asset(
+                    'assets/images/thinkingman.png',
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover, // Ensures the image covers the width properly
+                  ),
+                ),
               ),
-            ),
-          ),
           // Foreground content with buttons
           SingleChildScrollView(
             child: Column(
@@ -87,15 +89,17 @@ class Register2nd extends StatelessWidget {
       body: Stack(
         children: [
           // Background Image
-          Positioned.fill(
-            child: Opacity(
-              opacity: 0.2, // Adjust the opacity to make the image less intrusive
-              child: Image.asset(
-                'assets/images/emailman.png',
-                fit: BoxFit.cover,
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Opacity(
+                  opacity: 0.2, // Adjust the opacity as needed
+                  child: Image.asset(
+                    'assets/images/emailman.png',
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover, // Ensures the image covers the width properly
+                  ),
+                ),
               ),
-            ),
-          ),
           // Foreground content with buttons
           SingleChildScrollView(
             child: Column(
