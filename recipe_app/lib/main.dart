@@ -5,6 +5,7 @@ import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -63,61 +64,82 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // Foreground content with buttons
           SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(50),
-                  child: Text(
-                    "Everyone can cook, You too!!",
-                    style: GoogleFonts.indieFlower(
-                      fontSize: 30,
+            child:Container(//Putting inside a container and aligning it to center to horizontally align elements
+              alignment: Alignment.center,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      "Everyone can cook, You too!!",
+                      style: GoogleFonts.indieFlower(
+                        fontSize: 30,
+                      ),
                     ),
                   ),
-                ),
-                // Register Button
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Buttons(
-                    title: "Register",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Register(),
-                        ),
-                      );
+                  // Register Button
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Buttons(
+                      title: "Register",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Register(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Text(
+                      "Already have an account?",
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  // Login Text Button
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text(
-                    "Already have an account?",
-                    style: GoogleFonts.leagueSpartan(
-                      fontSize: 20,
+                    child: Text(
+                      'Log-In',
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 20,
+                        color: MyColors.primarycolor,
+                      ),
                     ),
                   ),
-                ),
-                // Login Text Button
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login()));
-                  },
-                  child: Text(
-                    'Log-In',
-                    style: GoogleFonts.leagueSpartan(
-                      fontSize: 20,
-                      color: MyColors.primarycolor,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 100), // Spacing to prevent overflow
-              ],
+                  const SizedBox(height: 100), // Spacing to prevent overflow
+                ],
+              ),
+
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+//Test for backend
+class Book {
+  final int id;
+  final String title;
+  final String author;
+
+  Book({required this.id, required this.title, required this.author});
+
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
+      id: json['id'],
+      title: json['title'],
+      author: json['author'],
     );
   }
 }
