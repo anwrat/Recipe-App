@@ -4,6 +4,7 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/navbar.dart';
+import 'package:recipe_app/widgets/splash_screen.dart';
 import 'package:recipe_app/widgets/textfields.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -303,7 +304,7 @@ class PasswordCreation extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const NavigationBarApp(),
+                                builder: (context) => const SplashScreen(screenname: "navbar",),
                               ),
                             );
                           } else {

@@ -9,7 +9,6 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, Widget> screenMap = {
-      'register': Register(),
       'navbar':NavigationBarApp(), // Add other screens as needed
     };
     // Delay navigation to the next page
