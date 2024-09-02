@@ -1,20 +1,13 @@
-const express = require('express')
-const cors = require('cors');
-const app = express()
-app.use(cors()); // Enable CORS for all routes by default
-const port = 3000
-app.get('/', (req, res) => {
- res.send('Hello World!')
-})
-app.listen(port, () => {
- console.log(`Server running at http://localhost:${port}`)
-})
-const books = [
-    {id: 1, title: 'Alice in Wonderland', author: 'Lewis Carrol'},
-    {id: 2, title: 'Around the World in eighty days', author: 'Jules Verne'},
-    {id: 3, title: 'Utopia', author: 'Sir Thomas Moor'},
-   ]
-   
-app.get('/api/books', (req, res) => {
-res.json(books)
-})
+const express=require('express')
+const mongoose=require('mongoose')
+//For using mongoose module, first need to install mongodb and mongoose through npm install name
+
+//For Login system
+mongodbServer='mongodb+srv://'
+username='dbUser'
+password='dbPassword123'
+clustername='cluster0.noxusbn.mongodb.net'
+databasename='RecipeApp'
+mongoose.connect('mongodb+srv://dbUser:dbPassword123@cluster0.noxusbn.mongodb.net/RecipeApp?retryWrites=true&w=majority&appName=Cluster0')
+.then(()=>console.log("Connected to database"))
+.catch((error)=>console.log(error))

@@ -5,6 +5,7 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/navbar.dart';
+import 'package:recipe_app/widgets/textfields.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -38,10 +39,8 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 30.0,
                 ),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                _buildTextFields(),
+                Textfields(displaytext:"Enter your username..",icons: 0xe491,),
+                Textfields(displaytext:"Enter password...",icons: 0xe3ae,ispass: true,),
             Padding(
               padding: const EdgeInsets.all(5),
               child:Buttons(
@@ -80,68 +79,6 @@ class _LoginState extends State<Login> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextFields() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-         Container(
-            child: TextField(
-              controller: _emailField,
-              textAlign: TextAlign.center,
-              // decoration: InputDecoration(
-              //   enabledBorder:const UnderlineInputBorder(
-              //     borderSide: BorderSide(
-              //       color: Colors.grey,
-              //       width: 2.0,
-              //     ),
-              //   ),
-              //   hintText: 'Email',
-              //   hintStyle: TextStyle(
-              //     color: Colors.grey[400],
-              //     fontSize: 18.0,
-              //     fontWeight: FontWeight.w300,
-              //   ),
-              // ),
-               decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                          hintText: 'Name',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                          ),
-                        ),
-            ),
-          ),
-          const SizedBox(
-            height: 60.0,
-          ),
-          Container(
-            child: TextField(
-              controller: _passwordField,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  color: Colors.grey[400],
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              obscureText: true,
-            ),
-          )
-        ],
       ),
     );
   }

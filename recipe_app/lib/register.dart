@@ -49,7 +49,7 @@ class _RegisterState extends State<Register> {
                     'How would you like everyone to know you?',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'Enter your username'),
+                  Textfields(displaytext: 'Enter your username...',icons: 0xe491,),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Buttons(
@@ -114,7 +114,7 @@ class Register2nd extends StatelessWidget {
                     'Enter your email address',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'example@email.com'),
+                  Textfields(displaytext: 'example@email.com',icons: 0xe22a,),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Buttons(
@@ -168,8 +168,8 @@ class PasswordCreation extends StatelessWidget {
                     'Enter a password for your account',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'Enter password...'),
-                  Textfields(displaytext: 'Repeat password...'),
+                  Textfields(displaytext: 'Enter password...',icons: 0xe3ae,ispass: true,),
+                  Textfields(displaytext: 'Repeat password...',icons: 0xe3ae,ispass: true,),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Buttons(
