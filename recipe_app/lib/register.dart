@@ -5,6 +5,8 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/navbar.dart';
 import 'package:recipe_app/widgets/textfields.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -13,6 +15,26 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+   final TextEditingController _usernameController = TextEditingController();
+     void _showDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,18 +71,27 @@ class _RegisterState extends State<Register> {
                     'How would you like everyone to know you?',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'Enter your username...',icons: 0xe491,),
+                  Textfields(
+                    controller: _usernameController,
+                    displaytext: 'Enter your username...',
+                    icons: 0xe491,
+                    ),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Buttons(
                       title: "Continue",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Register2nd(),
-                          ),
-                        );
+                        if(_usernameController.text.isEmpty){
+                          _showDialog(context, "Username cannot be empty");
+                        }
+                        else{
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Register2nd(username: _usernameController.text,),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ),
@@ -77,7 +108,29 @@ class _RegisterState extends State<Register> {
 }
 
 class Register2nd extends StatelessWidget {
-  const Register2nd({super.key});
+  final String username; // Received from the first screen
+  final TextEditingController _emailController = TextEditingController();
+
+  Register2nd({required this.username, super.key});
+    void _showDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,18 +167,30 @@ class Register2nd extends StatelessWidget {
                     'Enter your email address',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'example@email.com',icons: 0xe22a,),
+                  Textfields(
+                    controller: _emailController,
+                    displaytext: 'example@email.com',
+                    icons: 0xe22a,
+                    ),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Buttons(
                       title: "Continue",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PasswordCreation(),
-                          ),
-                        );
+                        if(_emailController.text.isEmpty){
+                          _showDialog(context, "Email cannot be empty");
+                        }
+                        else{
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PasswordCreation(
+                                username: username,
+                                email: _emailController.text,
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ),
@@ -142,7 +207,51 @@ class Register2nd extends StatelessWidget {
 }
 
 class PasswordCreation extends StatelessWidget {
-  const PasswordCreation({super.key});
+  final String username;
+  final String email;
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  PasswordCreation({required this.username, required this.email, super.key});
+
+  // Function to send data to Node.js backend
+  Future<void> sendData(String username, String email, String password) async {
+    final url = Uri.parse('http://localhost:3000/api/register'); // Change this URL to your backend endpoint
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Registration successful');
+    } else {
+      print('Failed to register: ${response.statusCode}');
+    }
+  }
+  void _showDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,19 +277,39 @@ class PasswordCreation extends StatelessWidget {
                     'Enter a password for your account',
                     style: GoogleFonts.leagueSpartan(fontSize: 30),
                   ),
-                  Textfields(displaytext: 'Enter password...',icons: 0xe3ae,ispass: true,),
-                  Textfields(displaytext: 'Repeat password...',icons: 0xe3ae,ispass: true,),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
+                  Textfields(
+                    controller: _passwordController,
+                    displaytext: 'Enter password...',
+                    icons: 0xe3ae,
+                    ispass: true,
+                    ),
+                  Textfields(
+                    controller: _confirmPasswordController,
+                    displaytext: 'Repeat password...',
+                    icons: 0xe3ae,
+                    ispass: true,
+                    ),
+                  Align(
+                    alignment: Alignment.center,
                     child: Buttons(
                       title: "Complete",
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavigationBarApp(),
-                          ),
-                        );
+                        if(_passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty){
+                          _showDialog(context, "Please fill all the fields");
+                        }
+                        else{
+                          if (_passwordController.text == _confirmPasswordController.text) {
+                            sendData(username, email, _passwordController.text);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const NavigationBarApp(),
+                              ),
+                            );
+                          } else {
+                            _showDialog(context, 'Passwords do not match');
+                          }
+                        }
                       },
                     ),
                   ),

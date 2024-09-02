@@ -10,6 +10,7 @@ class SearchPage extends StatefulWidget{
 }
 
 class _SearchPageState extends State<SearchPage>{
+  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _SearchPageState extends State<SearchPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Search Page"),
-            const Textfields(displaytext: "Enter your term to search"),
+            Textfields(controller: _searchController,displaytext: "Enter your term to search"),
             //Home Button
             ElevatedButton(
               style: ButtonStyle(

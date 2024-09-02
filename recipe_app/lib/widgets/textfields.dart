@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Textfields extends StatefulWidget {
+  final TextEditingController controller;
   final String displaytext;
   final bool? ispass; // Change from Bool? to bool?
   final int? icons;
 
   const Textfields({
     super.key,
+    required this.controller,
     required this.displaytext,
     this.icons,
     this.ispass,
@@ -27,6 +30,7 @@ class _TextfieldsState extends State<Textfields> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextField(
+            controller: widget.controller,
             obscureText: widget.ispass == true ? _isObscured : false, // Check if ispass is true
             decoration: InputDecoration(
               fillColor: const Color.fromRGBO(217, 217, 217, 1),
@@ -37,6 +41,10 @@ class _TextfieldsState extends State<Textfields> {
               ),
               border: const OutlineInputBorder(),
               hintText: widget.displaytext,
+              hintStyle: GoogleFonts.leagueSpartan(
+                fontSize: 20,
+                color: Color.fromRGBO(156, 163, 175, 1),
+              ),
               prefixIcon: widget.icons != null
                   ? Icon(
                       IconData(widget.icons!, fontFamily: 'MaterialIcons'),

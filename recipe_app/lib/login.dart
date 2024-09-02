@@ -14,9 +14,28 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController _emailField =  TextEditingController();
+  final TextEditingController _usernameField =  TextEditingController();
   final TextEditingController _passwordField =  TextEditingController();
 
+  void _showDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +58,25 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 30.0,
                 ),
-                Textfields(displaytext:"Enter your username..",icons: 0xe491,),
-                Textfields(displaytext:"Enter password...",icons: 0xe3ae,ispass: true,),
+                Textfields(controller: _usernameField,displaytext:"Enter your username..",icons: 0xe491,),
+                Textfields(controller: _passwordField,displaytext:"Enter password...",icons: 0xe3ae,ispass: true,),
             Padding(
               padding: const EdgeInsets.all(5),
               child:Buttons(
                 title: "Login",
                 onPressed:(){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:(context) =>
-                        const NavigationBarApp(),
-                      )
-                  );
+                  if(_usernameField.text.isEmpty || _passwordField.text.isEmpty){
+                    _showDialog(context, "Please fill all the fields");
+                  }
+                  else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:(context) =>
+                          const NavigationBarApp(),
+                        )
+                    );
+                  }
               },
               ),
             ),
