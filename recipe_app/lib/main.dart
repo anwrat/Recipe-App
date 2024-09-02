@@ -6,7 +6,9 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';//For JSON
+import 'dart:convert';
+
+import 'package:recipe_app/widgets/splash_screen.dart';//For JSON
 
 void main() {
   runApp(const MyApp());
@@ -87,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Register(),
+                            builder: (context) => SplashScreen(screenname: "register",),
                           ),
                         );
                       },

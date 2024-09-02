@@ -5,6 +5,7 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/navbar.dart';
+import 'package:recipe_app/widgets/splash_screen.dart';
 import 'package:recipe_app/widgets/textfields.dart';
 
 class Login extends StatefulWidget {
@@ -73,7 +74,7 @@ class _LoginState extends State<Login> {
                       context,
                       MaterialPageRoute(
                         builder:(context) =>
-                          const NavigationBarApp(),
+                          const SplashScreen(screenname: 'navbar',),
                         )
                     );
                   }
