@@ -95,7 +95,7 @@ app.post('/api/checkemail', async (req, res) => {
     const existingUser = await LoginDetail.findOne({email});
 
     if (existingUser) {
-      return res.status(408).json({ message: 'Email already exists' });
+      return res.status(409).json({ message: 'Email already exists' });
     }
 
     res.status(200).json({ message: 'Email is available' });

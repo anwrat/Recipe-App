@@ -218,7 +218,7 @@ class PasswordCreation extends StatelessWidget {
   PasswordCreation({required this.username, required this.email, super.key});
 
   // Function to send data to Node.js backend
-  Future<void> sendData(String username, String email, String password) async {
+  Future<void> sendData(BuildContext context,String username, String email, String password) async {
     final url = Uri.parse('http://localhost:3000/api/register'); 
     final response = await http.post(
       url,
@@ -231,11 +231,17 @@ class PasswordCreation extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
-      print('Registration successful');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SplashScreen(screenname: "navbar",),
+        ),
+      );
     } else {
       print('Failed to register: ${response.statusCode}');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,7 +291,10 @@ class PasswordCreation extends StatelessWidget {
                           if (_passwordController.text == _confirmPasswordController.text) {
                             RegExp passcheck=RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{7,}$');
                             if(passcheck.hasMatch(_passwordController.text)){
-                              sendData(username, email, _passwordController.text);
+                              sendData(context,username, email, _passwordController.text);
+                            }
+                            else{
+                              showErrorDialog(context, "Password does not meet criteria");
                             }
                           } else {
                             showErrorDialog(context, 'Passwords do not match');
@@ -327,7 +336,6 @@ class PasswordCreation extends StatelessWidget {
                   const SizedBox(height: 100),
                 ],
               ),
-
             ),
           ),
         ],
