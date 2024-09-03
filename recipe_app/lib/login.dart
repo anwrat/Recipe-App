@@ -4,6 +4,7 @@ import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
+import 'package:recipe_app/widgets/showdialog.dart';
 import 'package:recipe_app/widgets/splash_screen.dart';
 import 'package:recipe_app/widgets/textfields.dart';
 
@@ -16,26 +17,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernameField =  TextEditingController();
   final TextEditingController _passwordField =  TextEditingController();
-
-  void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +47,7 @@ class _LoginState extends State<Login> {
                 title: "Login",
                 onPressed:(){
                   if(_usernameField.text.isEmpty || _passwordField.text.isEmpty){
-                    _showDialog(context, "Please fill all the fields");
+                    showErrorDialog(context, "Please fill all the fields");
                   }
                   else{
                     Navigator.push(

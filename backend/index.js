@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); // Import bcrypt for hashing password 
 
 const app = express();
 app.use(cors());
@@ -39,20 +40,21 @@ const LoginDetail = mongoose.model('LoginDetails', loginDetailsSchema);
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
 
+  const hashedPassword = await bcrypt.hash(password, 10);//10 is the level of hashing
   // Create a new document using the LoginDetail model
   const newUser = new LoginDetail({
     username,
     email,
-    password,
+    password:hashedPassword,
   });
 
   try {
     // Save the document to the database
     await newUser.save();
-    console.log('Data saved to logindetails:', {
+    console.log('Data saved to LoginDetails:', {
       username: username,
       email: email,
-      password: password,
+      password: hashedPassword,
     });
 
     // Send a success response back to the client

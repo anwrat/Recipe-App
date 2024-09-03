@@ -5,6 +5,7 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/splash_screen.dart';
 import 'package:recipe_app/widgets/textfields.dart';
+import 'package:recipe_app/widgets/showdialog.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -16,25 +17,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
    final TextEditingController _usernameController = TextEditingController();
-     void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +64,7 @@ class _RegisterState extends State<Register> {
                       title: "Continue",
                       onPressed: () {
                         if(_usernameController.text.isEmpty){
-                          _showDialog(context, "Username cannot be empty");
+                          showErrorDialog(context, "Username cannot be empty");
                         }
                         else{
                           Navigator.push(
@@ -112,25 +94,6 @@ class Register2nd extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
 
   Register2nd({required this.username, super.key});
-    void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,18 +141,24 @@ class Register2nd extends StatelessWidget {
                       title: "Continue",
                       onPressed: () {
                         if(_emailController.text.isEmpty){
-                          _showDialog(context, "Email cannot be empty");
+                          showErrorDialog(context, "Email cannot be empty");
                         }
                         else{
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PasswordCreation(
-                                username: username,
-                                email: _emailController.text,
+                          RegExp emailcheck=RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                          if(emailcheck.hasMatch(_emailController.text)==true){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PasswordCreation(
+                                  username: username,
+                                  email: _emailController.text,
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
+                          else{
+                            showErrorDialog(context, "Please enter appropriate email");
+                          }
                         }
                       },
                     ),
@@ -232,25 +201,6 @@ class PasswordCreation extends StatelessWidget {
     } else {
       print('Failed to register: ${response.statusCode}');
     }
-  }
-  void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
   @override
   Widget build(BuildContext context) {
@@ -295,7 +245,7 @@ class PasswordCreation extends StatelessWidget {
                       title: "Complete",
                       onPressed: () {
                         if(_passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty){
-                          _showDialog(context, "Please fill all the fields");
+                          showErrorDialog(context, "Please fill all the fields");
                         }
                         else{
                           if (_passwordController.text == _confirmPasswordController.text) {
@@ -307,7 +257,7 @@ class PasswordCreation extends StatelessWidget {
                               ),
                             );
                           } else {
-                            _showDialog(context, 'Passwords do not match');
+                            showErrorDialog(context, 'Passwords do not match');
                           }
                         }
                       },
