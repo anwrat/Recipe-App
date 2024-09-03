@@ -65,6 +65,46 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+
+// POST endpoint to check same username
+app.post('/api/checkusername', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    // Check if username already exists
+    const existingUser = await LoginDetail.findOne({ username });
+
+    if (existingUser) {
+      // If username exists, send a 409 Conflict status code
+      return res.status(409).json({ message: 'Username already exists' });
+    }
+
+    // If username does not exist, send a 200 OK status code
+    res.status(200).json({ message: 'Username is available' });
+  } catch (error) {
+    console.error('Error checking username:', error);
+    res.status(500).json({ message: 'Error checking username' });
+  }
+});
+
+// POST endpoint to check same email
+app.post('/api/checkemail', async (req, res) => {
+  const {email} = req.body;
+
+  try {
+    const existingUser = await LoginDetail.findOne({email});
+
+    if (existingUser) {
+      return res.status(408).json({ message: 'Email already exists' });
+    }
+
+    res.status(200).json({ message: 'Email is available' });
+  } catch (error) {
+    console.error('Error checking email:', error);
+    res.status(500).json({ message: 'Error checking email' });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

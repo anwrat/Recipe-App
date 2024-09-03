@@ -17,6 +17,28 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
    final TextEditingController _usernameController = TextEditingController();
+    Future<void> sendData(String username) async {
+    final url = Uri.parse('http://localhost:3000/api/checkusername'); 
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Register2nd(username: _usernameController.text,),
+      ),
+      );
+    } 
+    else{
+      showErrorDialog(context, "Username already exists");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +89,7 @@ class _RegisterState extends State<Register> {
                           showErrorDialog(context, "Username cannot be empty");
                         }
                         else{
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Register2nd(username: _usernameController.text,),
-                            ),
-                          );
+                          sendData(_usernameController.text);
                         }
                       },
                     ),
@@ -93,6 +110,31 @@ class Register2nd extends StatelessWidget {
   final String username; // Received from the first screen
   final TextEditingController _emailController = TextEditingController();
 
+  Future<void> sendData(String username,String email,BuildContext context) async {
+    final url = Uri.parse('http://localhost:3000/api/checkemail'); 
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PasswordCreation(
+            username: username,
+            email:email,
+          ),
+        ),
+      );
+    } 
+    else{
+      showErrorDialog(context, "An user with this email already exists");
+    }
+  }
   Register2nd({required this.username, super.key});
   @override
   Widget build(BuildContext context) {
@@ -146,15 +188,7 @@ class Register2nd extends StatelessWidget {
                         else{
                           RegExp emailcheck=RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
                           if(emailcheck.hasMatch(_emailController.text)==true){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PasswordCreation(
-                                  username: username,
-                                  email: _emailController.text,
-                                ),
-                              ),
-                            );
+                            sendData(username,_emailController.text, context);
                           }
                           else{
                             showErrorDialog(context, "Please enter appropriate email");
@@ -185,7 +219,7 @@ class PasswordCreation extends StatelessWidget {
 
   // Function to send data to Node.js backend
   Future<void> sendData(String username, String email, String password) async {
-    final url = Uri.parse('http://localhost:3000/api/register'); // Change this URL to your backend endpoint
+    final url = Uri.parse('http://localhost:3000/api/register'); 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -249,13 +283,10 @@ class PasswordCreation extends StatelessWidget {
                         }
                         else{
                           if (_passwordController.text == _confirmPasswordController.text) {
-                            sendData(username, email, _passwordController.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SplashScreen(screenname: "navbar",),
-                              ),
-                            );
+                            RegExp passcheck=RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{7,}$');
+                            if(passcheck.hasMatch(_passwordController.text)){
+                              sendData(username, email, _passwordController.text);
+                            }
                           } else {
                             showErrorDialog(context, 'Passwords do not match');
                           }
