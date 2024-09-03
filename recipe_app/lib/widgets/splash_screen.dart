@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:recipe_app/register.dart';
 import 'package:recipe_app/widgets/navbar.dart';
 
 class SplashScreen extends StatelessWidget {
