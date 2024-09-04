@@ -21,14 +21,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: MyColors.primarycolor),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page '),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -97,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       "Already have an account?",
                       style: GoogleFonts.leagueSpartan(
                         fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),

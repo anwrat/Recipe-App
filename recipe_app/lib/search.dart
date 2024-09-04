@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/main.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
-import 'package:recipe_app/widgets/textfields.dart';
 import 'package:recipe_app/widgets/logo.dart';
 
-class SearchPage extends StatefulWidget{
-  const SearchPage();
-  State<StatefulWidget> createState() => _SearchPageState();
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+  @override
+  State<StatefulWidget> createState() =>  _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage>{
-  final TextEditingController _searchController = TextEditingController();
+class _SearchPageState extends State<SearchPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,46 +24,74 @@ class _SearchPageState extends State<SearchPage>{
           ],
         ), 
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Search Page"),
-            Textfields(controller: _searchController,displaytext: "Enter your term to search"),
-            //Home Button
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+              child:Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Register()));
+                    },
+                    child:Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.sizeOf(context).width*0.5,
+                          child: TextField(
+                              decoration: InputDecoration(
+                                fillColor: const Color.fromRGBO(217, 217, 217, 1),
+                                filled: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Color.fromRGBO(217, 217, 217, 1)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                border: const OutlineInputBorder(),
+                                hintText: "Type to search....",
+                                hintStyle: GoogleFonts.leagueSpartan(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(156, 163, 175, 1),
+                                ),
+                              ),
+                            ),
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
+                              shape: WidgetStatePropertyAll(
+                                const CircleBorder(), 
+                              ),
+                              padding: WidgetStatePropertyAll(
+                                const EdgeInsets.all(20), 
+                              ),
+                          ),
+                          child: const Icon(color: MyColors.mainwhite,IconData(0xe567, fontFamily: 'MaterialIcons'),size:30,),
+                          onPressed:(){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:(context) =>
+                                  const SearchPage(),
+                                )
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+              ],
+
               ),
-              //To use a hex color use color class and add 0xff as prefix
-              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe318, fontFamily: 'MaterialIcons'),),
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const MyApp(),
-                    )
-                );
-              },
             ),
-            //Search Button
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(MyColors.primarycolor),
-              ),
-              child: const Icon(color: Color(0xffFFFFFF),IconData(0xe567, fontFamily: 'MaterialIcons'),),
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:(context) =>
-                      const SearchPage(),
-                    )
-                );
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

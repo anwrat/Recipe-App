@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/home.dart';
+import 'package:recipe_app/profilepage.dart';
 import 'package:recipe_app/search.dart';
+import 'package:recipe_app/settings.dart';
 import 'package:recipe_app/utils/colors.dart';
 
-/// Flutter code sample for [NavigationBar].
 
 void main() => runApp(const NavigationBarApp());
 
@@ -75,10 +76,10 @@ class _NavigationExampleState extends State<NavigationExample> {
         const SearchPage(),
 
         /// Account page
-        const SearchPage(),
+        const ProfilePage(),
 
         /// Settings Page
-        const SearchPage(),
+        const Settings(),
       ][currentPageIndex],
     );
   }
