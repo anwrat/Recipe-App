@@ -34,11 +34,7 @@ class _SearchPageState extends State<SearchPage> {
                   const SizedBox(
                     height: 30.0,
                   ),
-                  InkWell(
-                    onTap:(){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Register()));
-                    },
-                    child:Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
@@ -49,7 +45,7 @@ class _SearchPageState extends State<SearchPage> {
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(color: Color.fromRGBO(217, 217, 217, 1)),
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(100),
                                 ),
                                 border: const OutlineInputBorder(),
                                 hintText: "Type to search....",
@@ -83,7 +79,6 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                       ],
                     ),
-                  ),
                   const SizedBox(
                     height: 30.0,
                   ),
