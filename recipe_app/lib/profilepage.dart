@@ -7,7 +7,8 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final String username;
+  const ProfilePage({required this.username,super.key});
   @override
   State<StatefulWidget> createState() =>  _ProfilePageState();
 }

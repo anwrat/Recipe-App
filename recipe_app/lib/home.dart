@@ -5,7 +5,8 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget{
-  const HomePage();
+  final String username;
+  const HomePage({required this.username,super.key});
   State<StatefulWidget> createState() => _HomePageState();
 }
 

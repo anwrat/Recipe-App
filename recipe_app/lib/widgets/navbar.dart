@@ -5,28 +5,16 @@ import 'package:recipe_app/search.dart';
 import 'package:recipe_app/settings.dart';
 import 'package:recipe_app/utils/colors.dart';
 
-class NavigationBarApp extends StatelessWidget {
-  final String username;
 
+class NavigationBarApp extends StatefulWidget {
+  final String username;
   const NavigationBarApp({required this.username,super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const NavigationExample(),
-    );
-  }
+  State<NavigationBarApp> createState() => _NavigationBarAppState();
 }
 
-class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
-
-  @override
-  State<NavigationExample> createState() => _NavigationExampleState();
-}
-
-class _NavigationExampleState extends State<NavigationExample> {
+class _NavigationBarAppState extends State<NavigationBarApp> {
   int currentPageIndex = 0;
 
   @override
@@ -69,16 +57,16 @@ class _NavigationExampleState extends State<NavigationExample> {
       ),
       body: <Widget>[
         //Home Page
-        const HomePage(),
+        HomePage(username: widget.username,),
 
         /// Search page
-        const SearchPage(),
+        SearchPage(username: widget.username,),
 
         /// Account page
-        const ProfilePage(),
+        ProfilePage(username: widget.username,),
 
         /// Settings Page
-        const Settings(),
+        Settings(username: widget.username,),
       ][currentPageIndex],
     );
   }

@@ -4,7 +4,8 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final String username;
+  const SearchPage({required this.username,super.key});
   @override
   State<StatefulWidget> createState() =>  _SearchPageState();
 }
@@ -71,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                               context,
                               MaterialPageRoute(
                                 builder:(context) =>
-                                  const SearchPage(),
+                                  SearchPage(username: widget.username,),
                                 )
                             );
                           },

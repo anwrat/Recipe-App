@@ -11,11 +11,12 @@ import 'package:recipe_app/settings.dart';
 
 class ChangePass extends StatelessWidget {
 
+  final String username;
   final TextEditingController _oldpasswordController = TextEditingController();
   final TextEditingController _newpasswordController = TextEditingController();
   final TextEditingController _confirmnewpasswordController = TextEditingController();
 
-  ChangePass({super.key});
+  ChangePass({required this.username,super.key});
 
   // Function to send data to Node.js backend
   Future<void> sendData(BuildContext context,String oldpass, String newpass) async {
@@ -33,7 +34,7 @@ class ChangePass extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Settings(),
+          builder: (context) => Settings(username: username,),
         ),
       );
     } else {

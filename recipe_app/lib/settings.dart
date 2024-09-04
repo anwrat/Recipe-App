@@ -8,7 +8,8 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({super.key});
+  final String username;
+  const Settings({required this.username,super.key});
   @override
   State<StatefulWidget> createState() =>  _SettingsState();
 }
@@ -50,7 +51,7 @@ class _SettingsState extends State<Settings> {
                   ),
                   InkWell(
                     onTap:(){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>ChangePass()));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>ChangePass(username: widget.username,)));
                     },
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.center,
