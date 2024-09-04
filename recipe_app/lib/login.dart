@@ -7,6 +7,8 @@ import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/widgets/showdialog.dart';
 import 'package:recipe_app/widgets/splash_screen.dart';
 import 'package:recipe_app/widgets/textfields.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +19,31 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernameField =  TextEditingController();
   final TextEditingController _passwordField =  TextEditingController();
+  
+  // Function to send data to Node.js backend
+  Future<void> sendData(BuildContext context,String username, String password) async {
+    final url = Uri.parse('http://localhost:3000/api/login'); 
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SplashScreen(screenname: "navbar",),
+        ),
+      );
+    } else {
+      showErrorDialog(context, "Wrong username/password");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,13 +77,7 @@ class _LoginState extends State<Login> {
                     showErrorDialog(context, "Please fill all the fields");
                   }
                   else{
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:(context) =>
-                          const SplashScreen(screenname: 'navbar',),
-                        )
-                    );
+                    sendData(context, _usernameField.text,_passwordField.text);
                   }
               },
               ),
