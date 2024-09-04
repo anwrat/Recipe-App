@@ -234,7 +234,7 @@ class PasswordCreation extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SplashScreen(screenname: "navbar",),
+          builder: (context) => SplashScreen(screenname: "navbar",username: username,),
         ),
       );
     } else {

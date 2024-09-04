@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage();
@@ -22,12 +23,36 @@ class _HomePageState extends State<HomePage>{
           ],
         ), 
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            
-          ],
+      body: Container(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    "Popular",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                Text(
+                    "Your Favourites",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                Text(
+                    "Categories",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
       //To place the navbar at bottom of screen

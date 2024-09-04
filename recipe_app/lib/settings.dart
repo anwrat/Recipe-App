@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_app/changepass.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
@@ -49,7 +50,7 @@ class _SettingsState extends State<Settings> {
                   ),
                   InkWell(
                     onTap:(){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Register()));
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>ChangePass()));
                     },
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -5,11 +5,10 @@ import 'package:recipe_app/search.dart';
 import 'package:recipe_app/settings.dart';
 import 'package:recipe_app/utils/colors.dart';
 
-
-void main() => runApp(const NavigationBarApp());
-
 class NavigationBarApp extends StatelessWidget {
-  const NavigationBarApp({super.key});
+  final String username;
+
+  const NavigationBarApp({required this.username,super.key});
 
   @override
   Widget build(BuildContext context) {

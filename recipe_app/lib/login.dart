@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SplashScreen(screenname: "navbar",),
+          builder: (context) => SplashScreen(screenname: "navbar",username: username,),
         ),
       );
     } else {

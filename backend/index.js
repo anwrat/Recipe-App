@@ -130,6 +130,31 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// POST endpoint to change password
+app.post('/api/changepass', async (req, res) => {
+  const {username,oldpassword,newpassword} = req.body;
+
+  try {
+    const user = await LoginDetail.findOne({username});
+
+    if (!user) {
+      return res.status(409).json({ message: 'User doesnot exist' });
+    }
+    else{
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if(!isPasswordValid){
+        return res.status(409).json({ message: 'Email already exists' });
+      }
+      else{
+        res.status(200).json({ message: 'Email is available' });
+      }
+    }
+  } catch (error) {
+    console.error('Error checking email:', error);
+    res.status(500).json({ message: 'Error checking email' });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

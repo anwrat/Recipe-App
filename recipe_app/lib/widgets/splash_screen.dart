@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:recipe_app/widgets/navbar.dart';
 
 class SplashScreen extends StatelessWidget {
+  final String username;
   final String? screenname;
-  const SplashScreen({super.key,required this.screenname});
+  const SplashScreen({super.key,required this.screenname,required this.username});
   @override
   Widget build(BuildContext context) {
     final Map<String, Widget> screenMap = {
-      'navbar':NavigationBarApp(), // Add other screens as needed
+      'navbar':NavigationBarApp(username: username,), // Add other screens as needed
     };
     // Delay navigation to the next page
     Future.delayed(Duration(seconds: 1), () {
