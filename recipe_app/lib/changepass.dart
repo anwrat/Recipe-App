@@ -19,24 +19,29 @@ class ChangePass extends StatelessWidget {
   ChangePass({required this.username,super.key});
 
   // Function to send data to Node.js backend
-  Future<void> sendData(BuildContext context,String oldpass, String newpass) async {
+  Future<void> sendData(BuildContext context,String username,String oldpass, String newpass) async {
     final url = Uri.parse('http://localhost:3000/api/changepass'); 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'oldpass': oldpass,
-        'newpass': newpass,
+        'username':username,
+        'oldpassword': oldpass,
+        'newpassword': newpass,
       }),
     );
 
     if (response.statusCode == 200) {
+      await showErrorDialog(context, "Password Changed successfully!!");
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Settings(username: username,),
         ),
       );
+    }
+    else if(response.statusCode == 401){
+      showErrorDialog(context, "Old password is incorrect");
     } else {
       print('Failed to register: ${response.statusCode}');
     }
@@ -63,19 +68,15 @@ class ChangePass extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Enter a password for your account',
-                    style: GoogleFonts.leagueSpartan(fontSize: 30),
-                  ),
                   Textfields(
                     controller: _oldpasswordController,
-                    displaytext: 'Enter password...',
+                    displaytext: 'Enter old password...',
                     icons: 0xe3ae,
                     ispass: true,
                     ),
                   Textfields(
                     controller: _newpasswordController,
-                    displaytext: 'Repeat password...',
+                    displaytext: 'Enter new password...',
                     icons: 0xe3ae,
                     ispass: true,
                     ),
@@ -88,7 +89,7 @@ class ChangePass extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: Buttons(
-                      title: "Complete",
+                      title: "Confirm",
                       onPressed: () {
                         if(_oldpasswordController.text.isEmpty || _confirmnewpasswordController.text.isEmpty||_confirmnewpasswordController.text.isEmpty){
                           showErrorDialog(context, "Please fill all the fields");
@@ -97,7 +98,7 @@ class ChangePass extends StatelessWidget {
                           if (_newpasswordController.text == _confirmnewpasswordController.text) {
                             RegExp passcheck=RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{7,}$');
                             if(passcheck.hasMatch(_newpasswordController.text)){
-                              sendData(context,_oldpasswordController.text, _confirmnewpasswordController.text);
+                              sendData(context,username,_oldpasswordController.text, _confirmnewpasswordController.text);
                             }
                             else{
                               showErrorDialog(context, "Password does not meet criteria");

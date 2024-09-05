@@ -20,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 200,//height of appbar
+        automaticallyImplyLeading: false,//remove back button
         title:Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

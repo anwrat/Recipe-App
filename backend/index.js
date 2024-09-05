@@ -132,28 +132,39 @@ app.post('/api/login', async (req, res) => {
 
 // POST endpoint to change password
 app.post('/api/changepass', async (req, res) => {
-  const {username,oldpassword,newpassword} = req.body;
+  const { username, oldpassword, newpassword } = req.body;
 
   try {
-    const user = await LoginDetail.findOne({username});
+    // Find the user by username
+    const user = await LoginDetail.findOne({ username });
 
     if (!user) {
-      return res.status(409).json({ message: 'User doesnot exist' });
+      return res.status(404).json({ message: 'User does not exist' });
     }
-    else{
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if(!isPasswordValid){
-        return res.status(409).json({ message: 'Email already exists' });
-      }
-      else{
-        res.status(200).json({ message: 'Email is available' });
-      }
+
+    // Check if the old password is valid
+    const isPasswordValid = await bcrypt.compare(oldpassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Old password is incorrect' });
     }
+
+    // Hash the new password
+    const hashedNewPassword = await bcrypt.hash(newpassword, 10);
+
+    // Update the user's password in the database
+    user.password = hashedNewPassword;
+    await user.save();
+
+    // Send a success response
+    res.status(200).json({ message: 'Password changed successfully' });
+
   } catch (error) {
-    console.error('Error checking email:', error);
-    res.status(500).json({ message: 'Error checking email' });
+    console.error('Error changing password:', error);
+    res.status(500).json({ message: 'Error changing password' });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {

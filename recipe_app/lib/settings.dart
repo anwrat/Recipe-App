@@ -21,6 +21,7 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 200,//height of appbar
+        automaticallyImplyLeading: false,//remove back button
         title:Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
 
-void showErrorDialog(BuildContext context, String message) {
-    showDialog(
+showErrorDialog(BuildContext context, String message) {
+    return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
