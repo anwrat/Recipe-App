@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/changepass.dart';
 import 'package:recipe_app/main.dart';
-import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
@@ -38,14 +37,6 @@ class _SettingsState extends State<Settings> {
                 children: <Widget>[
                   const SizedBox(
                     height: 30.0,
-                  ),
-                  Padding(
-                    child:Text(
-                      "Don't have an account?",
-                      style: GoogleFonts.leagueSpartan(
-                        fontSize: 20,
-                      ),),
-                    padding: const EdgeInsets.only(top: 30),
                   ),
                   const SizedBox(
                     height: 30.0,

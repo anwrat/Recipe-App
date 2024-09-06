@@ -9,31 +9,35 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:recipe_app/settings.dart';
 
-class ChangePass extends StatelessWidget {
+class Createrecipe extends StatelessWidget {
 
   final String username;
-  final TextEditingController _oldpasswordController = TextEditingController();
-  final TextEditingController _newpasswordController = TextEditingController();
-  final TextEditingController _confirmnewpasswordController = TextEditingController();
+  final TextEditingController _recipename = TextEditingController();
+  final TextEditingController _category = TextEditingController();
+  final TextEditingController _recipedetails = TextEditingController();
+  final TextEditingController _ingredients = TextEditingController();
+  final TextEditingController _instructions = TextEditingController();
 
-  ChangePass({required this.username,super.key});
+  Createrecipe({required this.username,super.key});
 
   // Function to send data to Node.js backend
-  Future<void> sendData(BuildContext context,String username,String oldpass, String newpass) async {
-    final url = Uri.parse('http://localhost:3000/api/changepass'); 
+  Future<void> sendData(BuildContext context,String recipename,String category, String recipedetails,String ingredients,String instructions) async {
+    final url = Uri.parse('http://localhost:3000/api/createrecipe'); 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'username':username,
-        'oldpassword': oldpass,
-        'newpassword': newpass,
+        'recipename':recipename,
+        'category':category ,
+        'recipedetails': recipedetails,
+        'ingredients':ingredients,
+        'instructions':instructions,
       }),
     );
 
     if (response.statusCode == 200) {
       await showErrorDialog(context, "Password Changed successfully!!");
-      Navigator.pop(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Settings(username: username,),
@@ -69,44 +73,31 @@ class ChangePass extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Textfields(
-                    controller: _oldpasswordController,
-                    displaytext: 'Enter old password...',
-                    icons: 0xe3ae,
-                    ispass: true,
+                    controller: _recipename,
+                    displaytext: '...',
                     ),
                   Textfields(
-                    controller: _newpasswordController,
-                    displaytext: 'Enter new password...',
-                    icons: 0xe3ae,
-                    ispass: true,
+                    controller: _category,
+                    displaytext: '...',
                     ),
                   Textfields(
-                    controller: _confirmnewpasswordController,
-                    displaytext: 'Repeat new password...',
-                    icons: 0xe3ae,
-                    ispass: true,
+                    controller: _recipedetails,
+                    displaytext: '...',
+                    ),
+                  Textfields(
+                    controller: _ingredients,
+                    displaytext: '...',
+                    ),
+                  Textfields(
+                    controller: _instructions,
+                    displaytext: '...',
                     ),
                   Align(
                     alignment: Alignment.center,
                     child: Buttons(
                       title: "Confirm",
                       onPressed: () {
-                        if(_oldpasswordController.text.isEmpty || _confirmnewpasswordController.text.isEmpty||_confirmnewpasswordController.text.isEmpty){
-                          showErrorDialog(context, "Please fill all the fields");
-                        }
-                        else{
-                          if (_newpasswordController.text == _confirmnewpasswordController.text) {
-                            RegExp passcheck=RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{7,}$');
-                            if(passcheck.hasMatch(_newpasswordController.text)){
-                              sendData(context,username,_oldpasswordController.text, _confirmnewpasswordController.text);
-                            }
-                            else{
-                              showErrorDialog(context, "Password does not meet criteria");
-                            }
-                          } else {
-                            showErrorDialog(context, 'Passwords do not match');
-                          }
-                        }
+                        sendData(context, _recipename.text, _category.text,_recipedetails.text, _ingredients.text, _instructions.text);
                       },
                     ),
                   ),
