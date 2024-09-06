@@ -12,6 +12,7 @@ import 'package:recipe_app/settings.dart';
 class Createrecipe extends StatelessWidget {
 
   final String username;
+  final TextEditingController _image = TextEditingController();
   final TextEditingController _recipename = TextEditingController();
   final TextEditingController _category = TextEditingController();
   final TextEditingController _recipedetails = TextEditingController();
@@ -21,13 +22,15 @@ class Createrecipe extends StatelessWidget {
   Createrecipe({required this.username,super.key});
 
   // Function to send data to Node.js backend
-  Future<void> sendData(BuildContext context,String recipename,String category, String recipedetails,String ingredients,String instructions) async {
+  Future<void> sendData(BuildContext context,String image,String recipename,String owner,String category, String recipedetails,String ingredients,String instructions) async {
     final url = Uri.parse('http://localhost:3000/api/createrecipe'); 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
+        'image':image,
         'recipename':recipename,
+        'owner':owner,
         'category':category ,
         'recipedetails': recipedetails,
         'ingredients':ingredients,
@@ -36,18 +39,18 @@ class Createrecipe extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
-      await showErrorDialog(context, "Password Changed successfully!!");
-      Navigator.push(
+      await showErrorDialog(context, "Recipe Created successfully!!");
+      Navigator.pop(
         context,
         MaterialPageRoute(
           builder: (context) => Settings(username: username,),
         ),
       );
     }
-    else if(response.statusCode == 401){
-      showErrorDialog(context, "Old password is incorrect");
+    else if(response.statusCode == 409){
+      showErrorDialog(context, "Recipe/Recipe Name already exists");
     } else {
-      print('Failed to register: ${response.statusCode}');
+      print('Failed to create recipe: ${response.statusCode}');
     }
   }
 
@@ -72,22 +75,62 @@ class Createrecipe extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    'Image of Recipe',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
+                  Textfields(
+                    controller: _image,
+                    displaytext: 'Paste URL of image here...',
+                    ),
+                  Text(
+                    'Name of Recipe',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
                   Textfields(
                     controller: _recipename,
                     displaytext: '...',
                     ),
+                  Text(
+                    'Category',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
                   Textfields(
                     controller: _category,
                     displaytext: '...',
                     ),
+                  Text(
+                    'Details about recipe',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
                   Textfields(
                     controller: _recipedetails,
                     displaytext: '...',
                     ),
+                  Text(
+                    'Ingredients Required',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
                   Textfields(
                     controller: _ingredients,
                     displaytext: '...',
                     ),
+                  Text(
+                    'Instructions',
+                    style: GoogleFonts.leagueSpartan(
+                    fontSize: 20, color: MyColors.mainblack,
+                    fontWeight: FontWeight.bold),
+                  ),
                   Textfields(
                     controller: _instructions,
                     displaytext: '...',
@@ -97,38 +140,8 @@ class Createrecipe extends StatelessWidget {
                     child: Buttons(
                       title: "Confirm",
                       onPressed: () {
-                        sendData(context, _recipename.text, _category.text,_recipedetails.text, _ingredients.text, _instructions.text);
+                        sendData(context,_image.text, _recipename.text,username, _category.text,_recipedetails.text, _ingredients.text, _instructions.text);
                       },
-                    ),
-                  ),
-                  Container(
-                    color: MyColors.minorcolor,
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Password Requirements',
-                          style: GoogleFonts.leagueSpartan(
-                              fontSize: 20, color: MyColors.primarycolor),
-                        ),
-                        Text(
-                          '• Minimum of 7 length',
-                          style: GoogleFonts.leagueSpartan(fontSize: 20),
-                        ),
-                        Text(
-                          '• Must include at least a number',
-                          style: GoogleFonts.leagueSpartan(fontSize: 20),
-                        ),
-                        Text(
-                          '• Must include a special character',
-                          style: GoogleFonts.leagueSpartan(fontSize: 20),
-                        ),
-                        Text(
-                          '• Must include both uppercase and lowercase characters',
-                          style: GoogleFonts.leagueSpartan(fontSize: 20),
-                        ),
-                      ],
                     ),
                   ),
                   const SizedBox(height: 100),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/main.dart';
+import 'package:recipe_app/createrecipe.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage>{
                   context,
                   MaterialPageRoute(
                     builder:(context) =>
-                      const MyApp(),
+                      Createrecipe(username: widget.username,),
                     )
                 );
         },

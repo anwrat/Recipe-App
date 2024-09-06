@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
+const recRoutes=require("./routes/recipe");
 
 const app = express();
 app.use(cors());
@@ -27,6 +28,7 @@ mongoose
 
 // Use authentication routes
 app.use('/api', authRoutes);
+app.use('/api',recRoutes);
 
 // Start the server
 app.listen(port, () => {
