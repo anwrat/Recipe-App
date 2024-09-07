@@ -17,4 +17,7 @@ router.post('/login', authController.login);
 // Change password route
 router.post('/changepass', authController.changePassword);
 
+//Save to Userdetails
+router.post('/savetouserdetails',authController.savetouserdetails);
+
 module.exports = router;

@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:recipe_app/widgets/navbar.dart';
 
 class Displayrecipe extends StatefulWidget {
 

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const LoginDetail = require('../models/LoginDetail');
+const UserDetail = require('../models/UserDetail');
 
 // Register user
 exports.register = async (req, res) => {
@@ -81,5 +82,19 @@ exports.changePassword = async (req, res) => {
   } catch (error) {
     console.error('Error changing password:', error);
     res.status(500).json({ message: 'Error changing password' });
+  }
+};
+
+// Save to user details while registering
+exports.savetouserdetails = async (req, res) => {
+  const { username, email } = req.body;
+
+  try {
+    const newUser = new UserDetail({ username, email});
+    await newUser.save();
+    res.status(200).json({ message: 'User details saved' });
+  } catch (error) {
+    console.error('Error saving data:', error);
+    res.status(500).json({ message: 'Error saving to userdetails' });
   }
 };

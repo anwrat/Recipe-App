@@ -231,6 +231,7 @@ class PasswordCreation extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
+      savetouserdetails(context, username, email);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -239,6 +240,23 @@ class PasswordCreation extends StatelessWidget {
       );
     } else {
       print('Failed to register: ${response.statusCode}');
+    }
+  }
+  Future<void> savetouserdetails(BuildContext context,String username, String email) async {
+    final url = Uri.parse('http://localhost:3000/api/savetouserdetails'); 
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'email': email,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Saved to user details");
+    } else {
+      print('Failed to save to user details: ${response.statusCode}');
     }
   }
 
