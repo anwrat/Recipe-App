@@ -140,7 +140,12 @@ class Createrecipe extends StatelessWidget {
                     child: Buttons(
                       title: "Confirm",
                       onPressed: () {
-                        sendData(context,_image.text, _recipename.text,username, _category.text,_recipedetails.text, _ingredients.text, _instructions.text);
+                        if(_image.text.isEmpty||_recipename.text.isEmpty||_category.text.isEmpty||_recipedetails.text.isEmpty||_ingredients.text.isEmpty||_instructions.text.isEmpty){
+                          showErrorDialog(context, "Please fill all the fields");
+                        }
+                        else{
+                          sendData(context,_image.text, _recipename.text,username, _category.text,_recipedetails.text, _ingredients.text, _instructions.text);
+                        }
                       },
                     ),
                   ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_app/main.dart';
 import 'package:recipe_app/register.dart';
 import 'package:recipe_app/utils/colors.dart';
+import 'package:recipe_app/widgets/displayrecipe.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 
@@ -71,13 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 30.0,
                   ),
                   Buttons(
-                    title: "Log-Out", 
+                    title: "Checking display recipe page", 
                     icons: Icon(IconData(0xe57f, fontFamily: 'MaterialIcons'),color:MyColors.mainwhite ,size: 30,),
                     onPressed:(){
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(),
+                          builder: (context) => Displayrecipe(recipename: "Steam Mo:Mo"),
                         ),
                       );
                     }),
