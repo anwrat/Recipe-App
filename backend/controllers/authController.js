@@ -98,3 +98,20 @@ exports.savetouserdetails = async (req, res) => {
     res.status(500).json({ message: 'Error saving to userdetails' });
   }
 };
+
+//Get from userdetails
+exports.getuserdetails =async (req, res) => {
+  const {username} = req.body;
+
+  try {
+    const users = await UserDetail.find({username});
+    if (users.length > 0) {
+      res.status(200).json(users); 
+    } else {
+      res.status(404).json({ message: 'No users found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Error fetching user' });
+  }
+};

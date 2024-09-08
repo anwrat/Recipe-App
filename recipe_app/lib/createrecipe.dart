@@ -3,6 +3,7 @@ import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/widgets/buttons.dart';
 import 'package:recipe_app/utils/colors.dart';
+import 'package:recipe_app/widgets/textfield2.dart';
 import 'package:recipe_app/widgets/textfields.dart';
 import 'package:recipe_app/widgets/showdialog.dart';
 import 'dart:convert';
@@ -111,7 +112,7 @@ class Createrecipe extends StatelessWidget {
                     fontSize: 20, color: MyColors.mainblack,
                     fontWeight: FontWeight.bold),
                   ),
-                  Textfields(
+                  Textfields2(
                     controller: _recipedetails,
                     displaytext: '...',
                     ),
@@ -121,7 +122,7 @@ class Createrecipe extends StatelessWidget {
                     fontSize: 20, color: MyColors.mainblack,
                     fontWeight: FontWeight.bold),
                   ),
-                  Textfields(
+                  Textfields2(
                     controller: _ingredients,
                     displaytext: '...',
                     ),
@@ -131,7 +132,7 @@ class Createrecipe extends StatelessWidget {
                     fontSize: 20, color: MyColors.mainblack,
                     fontWeight: FontWeight.bold),
                   ),
-                  Textfields(
+                  Textfields2(
                     controller: _instructions,
                     displaytext: '...',
                     ),

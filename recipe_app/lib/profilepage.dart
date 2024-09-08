@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/EditProfile.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -17,17 +19,16 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  String image='';
-  String owner='';
-  String category='';
-  String recipeDetails = '';
-  String ingredients = '';
-  String instructions = '';
+  String pfp='';
+  String email='';
+  String bio='';
+  List<dynamic> created = [];
+  List<dynamic> favourites = [];
   bool isLoading = true;
 
   // Function to send data to Node.js backend
   Future<void> getData(BuildContext context,String username) async {
-    final url = Uri.parse('http://localhost:3000/api/getrecipe'); 
+    final url = Uri.parse('http://localhost:3000/api/getuserdetails'); 
     try{
       final response = await http.post(url,headers: {'Content-Type': 'application/json'},body: jsonEncode({'username': username}),);
 
@@ -35,27 +36,26 @@ class _ProfilePageState extends State<ProfilePage> {
         final List<dynamic> data = jsonDecode(response.body);
         
         if (data.isNotEmpty && data.first is Map<String, dynamic>) {
-          final recipe = data.first as Map<String, dynamic>;
+          final user = data.first as Map<String, dynamic>;
           // Update state variables with fetched data
           setState(() {
-            image=recipe['image'].toString();
-            owner=recipe['owner'].toString();
-            category=recipe['category'].toString();
-            recipeDetails = recipe['recipedetails'].toString();
-            ingredients = recipe['ingredients'].toString() ;
-            instructions = recipe['instructions'].toString();
+            pfp=user['pfp'].toString();
+            email=user['email'].toString();
+            bio=(user['bio']?.isEmpty ?? true) ? "..." : user['bio'];// Storing '...' if user['bio'] is empty or null
+            created = user['created'];
+            favourites = user['favourites'];
             isLoading = false;
           });
         }
       }
       else {
-        print('Failed to fetch recipe: ${response.statusCode}');
+        print('Failed to fetch userdetails: ${response.statusCode}');
         setState(() {
           isLoading = false;
         });
       }
     }catch(error){
-      print('Error fetching recipe: $error');
+      print('Error fetching userdetails: $error');
       setState(() {
         isLoading = false;
       });
@@ -70,84 +70,123 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 200, // height of appbar
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LogoSection(image: 'assets/images/mainlogo.png'),
-          ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,//to remove the back arrow
+          toolbarHeight: 200, // height of appbar
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LogoSection(image: 'assets/images/mainlogo.png'),
+            ],
+          ),
         ),
-      ),
-      body: isLoading
-      ? const Center(child: CircularProgressIndicator()) // Show loading indicator while fetching data
-      : Stack(
-        children: [
-          // Foreground content with buttons and other widgets
-          SingleChildScrollView(
-            child:Container(
-              alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.username,
-                    style: GoogleFonts.leagueSpartan(
-                    fontSize: 30, color: MyColors.mainblack,
-                    fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Email address of user",
-                    style: GoogleFonts.leagueSpartan(
-                    fontSize: 30, color: MyColors.mainblack,
-                    fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 30),
-                  ClipOval(
-                    child: Image.network(
-                      image, 
-                      width: 100.0, 
-                      height: 100.0,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                : null,
+        body: isLoading
+        ? const Center(child: CircularProgressIndicator()) // Show loading indicator while fetching data
+        : Stack(
+          children: [
+            // Foreground content with buttons and other widgets
+            SingleChildScrollView(
+              child:Container(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: Row(
+                        children: [
+                          ClipOval(
+                            child: Image.network(
+                              pfp, 
+                              width: 100.0, 
+                              height: 100.0,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                return const Icon(
+                                  Icons.error, 
+                                  color: Colors.red,
+                                );
+                              },
+                            ),
                           ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                        return const Icon(
-                          Icons.error, 
-                          color: Colors.red,
-                        );
-                      },
+                          Column(
+                            children: [
+                              Text(
+                                widget.username,
+                                style: GoogleFonts.leagueSpartan(
+                                fontSize: 30, color: MyColors.mainblack,
+                                fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                email,
+                                style: GoogleFonts.leagueSpartan(
+                                fontSize: 15, color: MyColors.mainblack,),
+                              ),
+                            ],
+                          ),
+                          InkWell(
+                            onTap:(){
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>EditProfile(username: widget.username,)));
+                            },
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(CupertinoIcons.pencil,color: MyColors.primarycolor,size: 40,),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Created Recipes",
-                    style: GoogleFonts.leagueSpartan(
-                    fontSize: 30, color: MyColors.mainblack,
-                    fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Favourite Recipes",
-                    style: GoogleFonts.leagueSpartan(
-                    fontSize: 30, color: MyColors.mainblack,
-                    fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 100),
-                ],
+                    const SizedBox(height: 30),
+                    Text(
+                      "About",
+                      style: GoogleFonts.leagueSpartan(
+                      fontSize: 24, color: MyColors.mainblack,
+                      fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      bio,
+                      style: GoogleFonts.leagueSpartan(
+                      fontSize: 24, color: MyColors.mainblack,),
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      "Favourite Recipes",
+                      style: GoogleFonts.leagueSpartan(
+                      fontSize: 24, color: MyColors.mainblack,
+                      fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      "Created Recipes",
+                      style: GoogleFonts.leagueSpartan(
+                      fontSize: 24, color: MyColors.mainblack,
+                      fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 100),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

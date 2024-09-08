@@ -20,4 +20,7 @@ router.post('/changepass', authController.changePassword);
 //Save to Userdetails
 router.post('/savetouserdetails',authController.savetouserdetails);
 
+//Get from Userdetails
+router.post('/getuserdetails',authController.getuserdetails);
+
 module.exports = router;
