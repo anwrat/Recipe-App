@@ -4,7 +4,6 @@ const userDetailsSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   pfp: { type: String, default:"https://i.postimg.cc/k5VcfPG7/blankpfp.webp" },
-  created: { type: [String], default:[] },
   favourites: { type: [String], default:[] },
   bio: { type: String, default:"" },
 }, {

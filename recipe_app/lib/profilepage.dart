@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/EditProfile.dart';
+import 'package:recipe_app/widgets/displayrecipe.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
+import 'package:recipe_app/widgets/recipecard.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -22,9 +24,37 @@ class _ProfilePageState extends State<ProfilePage> {
   String pfp='';
   String email='';
   String bio='';
-  List<dynamic> created = [];
   List<dynamic> favourites = [];
   bool isLoading = true;
+
+  List<Map<String, dynamic>> recipes = []; // List to hold fetched recipes
+
+  // Function to fetch recipes from backend
+  Future<void> fetchRecipes() async {
+    final url = Uri.parse('http://localhost:3000/api/getallrecipe'); // Your backend endpoint
+    try {
+      final response =
+          await http.post(url, headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body); // Decode the JSON response
+        setState(() {
+          // Convert each recipe to a Map<String, dynamic>
+          recipes = data.map((item) => item as Map<String, dynamic>).toList();
+          isLoading = false; // Stop loading when data is fetched
+        });
+      } else {
+        print('Failed to fetch recipes: ${response.statusCode}');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (error) {
+      print('Error fetching recipes: $error');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   // Function to send data to Node.js backend
   Future<void> getData(BuildContext context,String username) async {
@@ -42,7 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
             pfp=user['pfp'].toString();
             email=user['email'].toString();
             bio=(user['bio']?.isEmpty ?? true) ? "..." : user['bio'];// Storing '...' if user['bio'] is empty or null
-            created = user['created'];
             favourites = user['favourites'];
             isLoading = false;
           });
@@ -66,6 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     getData(context, widget.username);
+    fetchRecipes();
   }
 
   @override
@@ -172,6 +202,45 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: GoogleFonts.leagueSpartan(
                       fontSize: 24, color: MyColors.mainblack,
                       fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 200, // Height of the recipe card section
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : recipes.isEmpty
+                              ? Center(child: Text('No recipes found'))
+                              : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: recipes.length,
+                                  itemBuilder: (context, index) {
+                                    final recipe = recipes[index];
+                                    final image = recipe['image'] ;
+                                    final name = recipe['recipename'] ;
+                                    final ownerUsername = recipe['owner'];
+
+                                  // Check if the current user is the owner of the recipe
+                                    if (ownerUsername != widget.username) {
+                                      // If the current user is not the owner, skip this recipe
+                                      return SizedBox.shrink(); // Empty space; won't render the card
+                                    }
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          3, // Display 3 cards at a time
+                                      height: 50,
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: InkWell(
+                                          onTap:(){
+                                            Navigator.push(context,MaterialPageRoute(builder: (context)=>Displayrecipe(recipename: name,)));
+                                          },
+                                        child: Recipecard(
+                                          image: image,
+                                          name: name,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                     ),
                     const SizedBox(height: 100),
                   ],
