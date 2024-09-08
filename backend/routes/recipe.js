@@ -8,4 +8,7 @@ router.post('/createrecipe', recController.createrecipe);
 //Get Recipe route
 router.post('/getrecipe',recController.getrecipe);
 
+//Get all recipes
+router.post('/getallrecipe',recController.getallrecipe);
+
 module.exports = router;

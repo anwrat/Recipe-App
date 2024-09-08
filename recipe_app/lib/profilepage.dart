@@ -168,13 +168,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(height: 30),
                     Text(
-                      "Favourite Recipes",
-                      style: GoogleFonts.leagueSpartan(
-                      fontSize: 24, color: MyColors.mainblack,
-                      fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
                       "Created Recipes",
                       style: GoogleFonts.leagueSpartan(
                       fontSize: 24, color: MyColors.mainblack,

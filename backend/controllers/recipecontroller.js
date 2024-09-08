@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const RecipeDetail = require('../models/RecipeDetail');
 
 // Create recipe
@@ -33,4 +32,20 @@ exports.getrecipe =async (req, res) => {
       res.status(500).json({ message: 'Error fetching recipes' });
     }
   };
+
+  // Get all recipes
+exports.getallrecipe = async (req, res) => {
+  try {
+    const recipes = await RecipeDetail.find({}); 
+    if (recipes.length > 0) {
+      res.status(200).json(recipes); 
+    } else {
+      res.status(404).json({ message: 'No recipes found' });
+    }
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    res.status(500).json({ message: 'Error fetching recipes' });
+  }
+};
+
   
