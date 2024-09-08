@@ -115,3 +115,22 @@ exports.getuserdetails =async (req, res) => {
     res.status(500).json({ message: 'Error fetching user' });
   }
 };
+
+// Edit profile
+exports.editprofile = async (req, res) => {
+  const { username, pfp, bio} = req.body;
+
+  try {
+    const user = await UserDetail.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
+
+    user.pfp = pfp;
+    user.bio=bio;
+    await user.save();
+
+    res.status(200).json({ message: 'Profile edited succesfully' });
+  } catch (error) {
+    console.error('Error editing profile:', error);
+    res.status(500).json({ message: 'Error editing profile' });
+  }
+};

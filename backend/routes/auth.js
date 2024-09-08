@@ -23,4 +23,7 @@ router.post('/savetouserdetails',authController.savetouserdetails);
 //Get from Userdetails
 router.post('/getuserdetails',authController.getuserdetails);
 
+//Edit profile of userdetails
+router.post('/editprofile',authController.editprofile);
+
 module.exports = router;
