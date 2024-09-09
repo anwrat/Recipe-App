@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/profilepage.dart';
 import 'package:recipe_app/widgets/displayrecipe.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';

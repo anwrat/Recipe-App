@@ -1,3 +1,4 @@
+const Fuse = require('fuse.js');
 const RecipeDetail = require('../models/RecipeDetail');
 
 // Create recipe
@@ -85,6 +86,34 @@ exports.deleterecipe = async (req, res) => {
   } catch (error) {
     console.error('Error deleting recipe:', error);
     res.status(500).json({ message: 'Error deleting recipe' });
+  }
+};
+
+// Search Recipe
+exports.searchrecipe = async (req, res) => {
+  const { searchText } = req.body;
+
+  try {
+    // Fetch all recipes
+    const allRecipes = await RecipeDetail.find({});
+
+    // Fuse.js option for fuzzy search
+    const fuse = new Fuse(allRecipes, {keys: ['recipename'], threshold: 0.3, });
+
+    // Perform the search
+    const fuzzyResults = fuse.search(searchText);
+
+    // Extract matched items
+    const recipes = fuzzyResults.map(result => result.item);
+
+    if (recipes.length > 0) {
+      res.status(200).json(recipes);
+    } else {
+      res.status(404).json({ message: 'No recipes found' });
+    }
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    res.status(500).json({ message: 'Error fetching recipes' });
   }
 };
 
