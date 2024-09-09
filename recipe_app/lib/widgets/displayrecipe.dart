@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/editrecipe.dart';
 import 'package:recipe_app/widgets/logo.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_app/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Displayrecipe extends StatefulWidget {
 
+  final String username;
   final String recipename;
 
-  const Displayrecipe({required this.recipename,super.key});
+  const Displayrecipe({required this.username,required this.recipename,super.key});
 
   @override
   State<Displayrecipe> createState() => _DisplayrecipeState();
@@ -91,11 +94,22 @@ class _DisplayrecipeState extends State<Displayrecipe> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    widget.recipename,
-                    style: GoogleFonts.leagueSpartan(
-                    fontSize: 30, color: MyColors.mainblack,
-                    fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Text(
+                        widget.recipename,
+                        style: GoogleFonts.leagueSpartan(
+                        fontSize: 30, color: MyColors.mainblack,
+                        fontWeight: FontWeight.bold),
+                      ),
+                      if(widget.username==owner) //Show edit icon only if user is the owner of recipe
+                        InkWell(
+                          onTap:(){
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=>EditRecipe(recipename: widget.recipename,)));
+                          },
+                          child: Icon(CupertinoIcons.pencil,color: MyColors.primarycolor,size: 40,),
+                        ),    
+                    ],
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

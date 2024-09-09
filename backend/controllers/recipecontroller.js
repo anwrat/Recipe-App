@@ -48,4 +48,25 @@ exports.getallrecipe = async (req, res) => {
   }
 };
 
+// Edit Recipe
+exports.editrecipe = async (req, res) => {
+  const { orgname,image,recipename,category ,recipedetails,ingredients,instructions} = req.body;
+  try {
+    const existingRecipe = await RecipeDetail.findOne({recipename:orgname});
+    if (!existingRecipe) return res.status(409).json({ message: 'Recipe doesnot exist' });
+
+    existingRecipe.image=image;
+    existingRecipe.recipename=recipename;
+    existingRecipe.category=category;
+    existingRecipe.recipedetails=recipedetails;
+    existingRecipe.ingredients=ingredients;
+    existingRecipe.instructions=instructions;
+    await existingRecipe.save();
+    res.status(200).json({ message: 'Recipe Edit successful' });
+  } catch (error) {
+    console.error('Error saving data:', error);
+    res.status(500).json({ message: 'Error editing recipe' });
+  }
+};
+
   

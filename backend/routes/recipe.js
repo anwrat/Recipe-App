@@ -11,4 +11,7 @@ router.post('/getrecipe',recController.getrecipe);
 //Get all recipes
 router.post('/getallrecipe',recController.getallrecipe);
 
+//Edit Recipe
+router.post('/editrecipe',recController.editrecipe);
+
 module.exports = router;

@@ -231,7 +231,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: InkWell(
                                           onTap:(){
-                                            Navigator.push(context,MaterialPageRoute(builder: (context)=>Displayrecipe(recipename: name,)));
+                                            Navigator.push(context,MaterialPageRoute(builder: (context)=>Displayrecipe(username: widget.username,recipename: name,)));
                                           },
                                         child: Recipecard(
                                           image: image,
