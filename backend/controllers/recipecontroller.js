@@ -69,4 +69,23 @@ exports.editrecipe = async (req, res) => {
   }
 };
 
+// Delete Recipe
+exports.deleterecipe = async (req, res) => {
+  const { recipename } = req.body;
+
+  try {
+    // Find and delete the recipe based on the recipename
+    const deletedRecipe = await RecipeDetail.findOneAndDelete({ recipename });
+
+    if (deletedRecipe) {
+      res.status(200).json({ message: 'Recipe deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Recipe not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    res.status(500).json({ message: 'Error deleting recipe' });
+  }
+};
+
   

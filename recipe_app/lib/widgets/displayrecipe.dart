@@ -6,6 +6,7 @@ import 'package:recipe_app/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:recipe_app/widgets/showdialog.dart';
 
 class Displayrecipe extends StatefulWidget {
 
@@ -65,10 +66,60 @@ class _DisplayrecipeState extends State<Displayrecipe> {
     }
   }
 
+// Function to delete the recipe
+  Future<void> deleteRecipe(String recipename) async {
+    final url = Uri.parse('http://localhost:3000/api/deleterecipe'); 
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'recipename': recipename}),
+      );
+
+      if (response.statusCode == 200) {
+        await showErrorDialog(context, "Recipe Deleted successfully!!");
+        Navigator.pop(context); 
+      } else {
+        print('Failed to delete recipe: ${response.statusCode}');
+        showErrorDialog(context, "Unexpected error ${response.statusCode}");
+      }
+    } catch (error) {
+      print('Error deleting recipe: $error');
+      showErrorDialog(context, "Unexpected error: ${error}");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getData(context, widget.recipename);
+  }
+
+  // Show confirmation dialog
+  void showDeleteConfirmation() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Are you sure you want to delete this recipe?',style: GoogleFonts.leagueSpartan(fontSize: 20,)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+              child: Text('No',style: GoogleFonts.leagueSpartan(fontSize: 20,color: MyColors.primarycolor)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+                deleteRecipe(widget.recipename); 
+              },
+              child: Text('Yes',style: GoogleFonts.leagueSpartan(fontSize: 20,color: MyColors.primarycolor)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -102,13 +153,20 @@ class _DisplayrecipeState extends State<Displayrecipe> {
                         fontSize: 30, color: MyColors.mainblack,
                         fontWeight: FontWeight.bold),
                       ),
-                      if(widget.username==owner) //Show edit icon only if user is the owner of recipe
+                      if(widget.username==owner)...[
                         InkWell(
                           onTap:(){
                             Navigator.push(context,MaterialPageRoute(builder: (context)=>EditRecipe(recipename: widget.recipename,)));
                           },
                           child: Icon(CupertinoIcons.pencil,color: MyColors.primarycolor,size: 40,),
                         ),    
+                        InkWell(
+                          onTap:(){
+                            showDeleteConfirmation();
+                          },
+                          child: Icon(IconData(0xe1b9, fontFamily: 'MaterialIcons'),color: MyColors.primarycolor,size: 40,),
+                        ),            
+                      ], //Show edit icon only if user is the owner of recipe
                     ],
                   ),
                   Container(

@@ -14,4 +14,7 @@ router.post('/getallrecipe',recController.getallrecipe);
 //Edit Recipe
 router.post('/editrecipe',recController.editrecipe);
 
+//Delete Recipe
+router.post('/deleterecipe',recController.deleterecipe);
+
 module.exports = router;
