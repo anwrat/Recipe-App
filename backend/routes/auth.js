@@ -26,4 +26,10 @@ router.post('/getuserdetails',authController.getuserdetails);
 //Edit profile of userdetails
 router.post('/editprofile',authController.editprofile);
 
+//Check if recipe is favourite
+router.post('/checkfav',authController.checkfav);
+
+//Add/remove from favourites
+router.post('/editfav',authController.editfav);
+
 module.exports = router;

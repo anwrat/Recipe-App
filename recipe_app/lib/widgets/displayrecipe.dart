@@ -27,7 +27,9 @@ class _DisplayrecipeState extends State<Displayrecipe> {
   String recipeDetails = '';
   String ingredients = '';
   String instructions = '';
+  List <dynamic> fav=[];
   bool isLoading = true;
+  bool isFavorite = true;
 
   // Function to send data to Node.js backend
   Future<void> getData(BuildContext context,String recipename) async {
@@ -89,10 +91,106 @@ class _DisplayrecipeState extends State<Displayrecipe> {
     }
   }
 
+  Future<void> getuserdetails(BuildContext context,String username) async {
+    final url = Uri.parse('http://localhost:3000/api/getuserdetails'); 
+    try{
+      final response = await http.post(url,headers: {'Content-Type': 'application/json'},body: jsonEncode({'username': username}),);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        
+        if (data.isNotEmpty && data.first is Map<String, dynamic>) {
+          final user = data.first as Map<String, dynamic>;
+          // Update state variables with fetched data
+          setState(() {
+            fav=user['favourites'];
+            isLoading = false;
+          });
+          checkIfFavorite();
+        }
+      }
+      else {
+        print('Failed to fetch userdetail: ${response.statusCode}');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }catch(error){
+      print('Error fetching userdetail: $error');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Function to handle adding to or removing from favorites
+Future<void> checkIfFavorite() async {
+  final url = Uri.parse('http://localhost:3000/api/checkfav');
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': widget.username,
+        'recipename': widget.recipename,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      if(responseData['message']=='Y'){
+        setState(() {
+          isFavorite = true; // Toggle the favorite status
+        });
+      }
+      else{
+        setState(() {
+          isFavorite = false; // Toggle the favorite status
+        });
+      }
+    } 
+    else{
+      print('Failed checking favorites: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error checking: $error');
+    showErrorDialog(context, 'Error checking favorites');
+  }
+}
+
+  // Function to handle adding to or removing from favorites
+Future<void> toggleFavoriteStatus() async {
+  final url = Uri.parse('http://localhost:3000/api/editfav');
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': widget.username,
+        'recipename': widget.recipename,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      // Successfully added to favorites
+      setState(() {
+        isFavorite = !isFavorite; // Toggle the favorite status
+      });
+       await showErrorDialog(context, responseData['message']);
+    } else {
+      print('Failed to add to favorites: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error adding to favorites: $error');
+  }
+}
+
   @override
   void initState() {
     super.initState();
     getData(context, widget.recipename);
+    getuserdetails(context, widget.username);
   }
 
   // Show confirmation dialog
@@ -220,6 +318,35 @@ class _DisplayrecipeState extends State<Displayrecipe> {
                     "Uploaded by: "+owner,
                     style: GoogleFonts.leagueSpartan(
                     fontSize: 16, color: MyColors.mainblack,),
+                  ),
+                  const SizedBox(height: 20),
+                  InkWell(
+                      onTap:(){
+                         setState(() {
+                              toggleFavoriteStatus();
+                            });
+                      },
+                      child: Row(
+                        children: [
+                           Icon(
+                                isFavorite
+                                    ? CupertinoIcons.heart_fill
+                                    : CupertinoIcons.heart,
+                                color: MyColors.primarycolor,
+                                size: 40,
+                              ),
+                              Text(
+                                isFavorite
+                                    ? "Remove from your favourites"
+                                    : "Add to your favourites",
+                                style: GoogleFonts.leagueSpartan(
+                                  fontSize: 20,
+                                  color: MyColors.primarycolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                        ],
+                      ),
                   ),
                   const SizedBox(height: 20),
                   Text(

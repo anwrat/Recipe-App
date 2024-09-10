@@ -134,3 +134,54 @@ exports.editprofile = async (req, res) => {
     res.status(500).json({ message: 'Error editing profile' });
   }
 };
+
+//Check if recipe is favourite
+exports.checkfav = async (req, res) => {
+  const { username, recipename } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await UserDetail.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
+
+    // Check if the recipe is already in favourites
+    if (user.favourites.includes(recipename)) {
+      return res.status(200).json({ message: 'Y' });
+    }
+    else{
+      res.status(200).json({ message: 'N' });
+    }
+  } catch (error) {
+    console.error('Error adding favourite:', error);
+    res.status(500).json({ message: 'Error adding favourite' });
+  }
+};
+
+
+// Favourite
+exports.editfav = async (req, res) => {
+  const { username, recipename } = req.body;
+
+  try {
+    const user = await UserDetail.findOne({ username });
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
+
+    // Check if the recipe is already in the favourites
+    const isFavorite = user.favourites.includes(recipename);
+
+    if (isFavorite) {
+      // Remove recipe from favourites
+      user.favourites = user.favourites.filter(fav => fav !== recipename);
+      await user.save();
+      res.status(200).json({ message: 'Recipe removed from favourites' });
+    } else {
+      // Add recipe to favourites
+      user.favourites.push(recipename);
+      await user.save();
+      res.status(200).json({ message: 'Recipe added to favourites' });
+    }
+  } catch (error) {
+    console.error('Error toggling favourite:', error);
+    res.status(500).json({ message: 'Error toggling favourite' });
+  }
+};

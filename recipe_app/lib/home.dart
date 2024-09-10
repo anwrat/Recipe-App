@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  "Your Favourites",
+                  "Categories",
                   style: GoogleFonts.leagueSpartan(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  "Categories",
+                  "Your Favourites",
                   style: GoogleFonts.leagueSpartan(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
