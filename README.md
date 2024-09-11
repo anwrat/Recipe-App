@@ -1,8 +1,11 @@
 ﻿# Recipe-App
 
+## To run this app after cloning it, make sure to run pub get to resolve dependencies
+
 A simple recipe app made in flutter including node/express for mongodb backend. App includes features such as registration, login, editing profile, creating/editing/deleting recipes, adding to favourites and more.
 
 Some other dependencies were also used such as nodemon, bcrypt and fuse.js.
+
 
 # Screenshots
 
