@@ -152,8 +152,8 @@ exports.checkfav = async (req, res) => {
       res.status(200).json({ message: 'N' });
     }
   } catch (error) {
-    console.error('Error adding favourite:', error);
-    res.status(500).json({ message: 'Error adding favourite' });
+    console.error('Error checking favourite:', error);
+    res.status(500).json({ message: 'Error checking favourite' });
   }
 };
 
